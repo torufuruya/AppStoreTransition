@@ -14,6 +14,12 @@ class FirstViewController: UIViewController {
 
     private var transition: CardTransition?
 
+    private var viewModels = [
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3")
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,8 +42,13 @@ extension FirstViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
-        cell.cardContentView.primaryLabel.text = "Primary Label"
+        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
+        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
     }
 }
 
@@ -84,7 +95,8 @@ extension FirstViewController: UICollectionViewDelegateFlowLayout {
         detail.modalPresentationCapturesStatusBarAppearance = true
         detail.modalPresentationStyle = .custom
 
-        self.present(detail, animated: true) {
-        }
+        detail.viewModel = self.viewModels[indexPath.row]
+
+        self.present(detail, animated: true)
     }
 }

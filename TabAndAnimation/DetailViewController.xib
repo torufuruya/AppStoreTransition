@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="TabAndAnimation" customModuleProvider="target">
             <connections>
                 <outlet property="cardContentView" destination="H92-Nf-qaR" id="q1V-VK-YKe"/>
+                <outlet property="dismissButton" destination="WW4-K0-Gjv" id="TWs-M4-6Tb"/>
                 <outlet property="scrollView" destination="RKM-Ve-R9e" id="Xcc-TM-B1h"/>
                 <outlet property="textView" destination="DfC-Kv-obb" id="cYu-pq-bxW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

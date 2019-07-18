@@ -8,10 +8,22 @@
 
 import UIKit
 
+struct CardContentViewModel {
+    let image: UIImage
+    let primary: String
+}
+
 class CardContentView: UIView, NibLoadable {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var primaryLabel: UILabel!
+
+    var viewModel: CardContentViewModel? {
+        didSet {
+            self.imageView.image = viewModel?.image
+            self.primaryLabel.text = viewModel?.primary
+        }
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
