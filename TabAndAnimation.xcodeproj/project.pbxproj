@@ -21,6 +21,9 @@
 		FDE597E422E01D4000C8AC0B /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597E322E01D4000C8AC0B /* UIView+AutoLayout.swift */; };
 		FDE597E722E01FC900C8AC0B /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597E522E01FC900C8AC0B /* CardCollectionViewCell.swift */; };
 		FDE597E822E01FC900C8AC0B /* CardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE597E622E01FC900C8AC0B /* CardCollectionViewCell.xib */; };
+		FDE597EB22E0702C00C8AC0B /* PresentCardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597EA22E0702C00C8AC0B /* PresentCardAnimator.swift */; };
+		FDE597ED22E0704F00C8AC0B /* DismissCardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597EC22E0704F00C8AC0B /* DismissCardAnimator.swift */; };
+		FDE597EF22E0707000C8AC0B /* CardTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597EE22E0707000C8AC0B /* CardTransition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		FDE597E322E01D4000C8AC0B /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		FDE597E522E01FC900C8AC0B /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		FDE597E622E01FC900C8AC0B /* CardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardCollectionViewCell.xib; sourceTree = "<group>"; };
+		FDE597EA22E0702C00C8AC0B /* PresentCardAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentCardAnimator.swift; sourceTree = "<group>"; };
+		FDE597EC22E0704F00C8AC0B /* DismissCardAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissCardAnimator.swift; sourceTree = "<group>"; };
+		FDE597EE22E0707000C8AC0B /* CardTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTransition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 		FD41941E22DFFA5200D9DE06 /* TabAndAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				FDE597E922E0701300C8AC0B /* Transition */,
 				FDE597DC22E01A7C00C8AC0B /* Views */,
 				FD41941F22DFFA5200D9DE06 /* AppDelegate.swift */,
 				FD41942122DFFA5200D9DE06 /* FirstViewController.swift */,
@@ -97,6 +104,16 @@
 				FDE597E322E01D4000C8AC0B /* UIView+AutoLayout.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FDE597E922E0701300C8AC0B /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				FDE597EE22E0707000C8AC0B /* CardTransition.swift */,
+				FDE597EC22E0704F00C8AC0B /* DismissCardAnimator.swift */,
+				FDE597EA22E0702C00C8AC0B /* PresentCardAnimator.swift */,
+			);
+			path = Transition;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,10 +194,13 @@
 				FD41942022DFFA5200D9DE06 /* AppDelegate.swift in Sources */,
 				FDE597DE22E01AB900C8AC0B /* CardContentView.swift in Sources */,
 				FDE597E722E01FC900C8AC0B /* CardCollectionViewCell.swift in Sources */,
+				FDE597EB22E0702C00C8AC0B /* PresentCardAnimator.swift in Sources */,
+				FDE597EF22E0707000C8AC0B /* CardTransition.swift in Sources */,
 				FDE597E422E01D4000C8AC0B /* UIView+AutoLayout.swift in Sources */,
 				FDE597E222E01D1700C8AC0B /* NibLoadable.swift in Sources */,
 				FD41942222DFFA5200D9DE06 /* FirstViewController.swift in Sources */,
 				FDE597DA22E01A3F00C8AC0B /* DetailViewController.swift in Sources */,
+				FDE597ED22E0704F00C8AC0B /* DismissCardAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
