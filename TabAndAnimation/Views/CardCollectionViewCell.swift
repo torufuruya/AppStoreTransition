@@ -21,4 +21,8 @@ class CardCollectionViewCell: UICollectionViewCell {
         layer.shadowOffset = .init(width: 0, height: 4)
         layer.shadowRadius = 12
     }
+
+    func resetTransform() {
+        self.transform = .identity
+    }
 }

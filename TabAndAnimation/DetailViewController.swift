@@ -10,7 +10,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var cardContentView: CardContentView!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    @IBAction func dismiss(_ sender: Any) {
+        self.dismiss(animated: true)
     }
 }
