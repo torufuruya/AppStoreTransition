@@ -38,4 +38,8 @@ final class CardTransition: NSObject, UIViewControllerTransitioningDelegate {
         )
         return DismissCardAnimator(params: params)
     }
+
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return CardPresentationController(presentedViewController: presented, presenting: presenting)
+    }
 }

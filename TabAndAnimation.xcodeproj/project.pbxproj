@@ -13,6 +13,7 @@
 		FD41942722DFFA5200D9DE06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD41942522DFFA5200D9DE06 /* Main.storyboard */; };
 		FD41942922DFFA5400D9DE06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD41942822DFFA5400D9DE06 /* Assets.xcassets */; };
 		FD41942C22DFFA5400D9DE06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD41942A22DFFA5400D9DE06 /* LaunchScreen.storyboard */; };
+		FD8C7B3022E1519700D307F6 /* CardPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8C7B2F22E1519700D307F6 /* CardPresentationController.swift */; };
 		FDE597DA22E01A3F00C8AC0B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */; };
 		FDE597DB22E01A3F00C8AC0B /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */; };
 		FDE597DE22E01AB900C8AC0B /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597DD22E01AB900C8AC0B /* CardContentView.swift */; };
@@ -35,6 +36,7 @@
 		FD41942822DFFA5400D9DE06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD41942B22DFFA5400D9DE06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD41942D22DFFA5400D9DE06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD8C7B2F22E1519700D307F6 /* CardPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPresentationController.swift; sourceTree = "<group>"; };
 		FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		FDE597DD22E01AB900C8AC0B /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		FDE597E922E0701300C8AC0B /* Transition */ = {
 			isa = PBXGroup;
 			children = (
+				FD8C7B2F22E1519700D307F6 /* CardPresentationController.swift */,
 				FDE597EE22E0707000C8AC0B /* CardTransition.swift */,
 				FDE597EC22E0704F00C8AC0B /* DismissCardAnimator.swift */,
 				FDE597EA22E0702C00C8AC0B /* PresentCardAnimator.swift */,
@@ -196,6 +199,7 @@
 				FDE597E722E01FC900C8AC0B /* CardCollectionViewCell.swift in Sources */,
 				FDE597EB22E0702C00C8AC0B /* PresentCardAnimator.swift in Sources */,
 				FDE597EF22E0707000C8AC0B /* CardTransition.swift in Sources */,
+				FD8C7B3022E1519700D307F6 /* CardPresentationController.swift in Sources */,
 				FDE597E422E01D4000C8AC0B /* UIView+AutoLayout.swift in Sources */,
 				FDE597E222E01D1700C8AC0B /* NibLoadable.swift in Sources */,
 				FD41942222DFFA5200D9DE06 /* FirstViewController.swift in Sources */,
