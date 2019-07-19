@@ -8,6 +8,10 @@
 
 import UIKit
 
+final class SectionHeader: UICollectionReusableView {
+    @IBOutlet weak var sectionLabel: UILabel!
+}
+
 class FirstViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -50,9 +54,20 @@ extension FirstViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
         cell.cardContentView.viewModel = self.viewModels[indexPath.row]
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCell", for: indexPath)
+        }
+        return UICollectionReusableView()
+    }
 }
 
 extension FirstViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 100)
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cardHorizontalOffset: CGFloat = 20

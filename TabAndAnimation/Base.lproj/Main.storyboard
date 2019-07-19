@@ -19,17 +19,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ld4-MI-yxe">
-                                <rect key="frame" x="0.0" y="144" width="414" height="669"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OKu-K0-roD">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="w3s-dd-rvh">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="50" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -37,21 +37,31 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderCell" id="d2b-ja-J16" customClass="SectionHeader" customModule="TabAndAnimation" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご利用明細" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRO-is-F3i">
+                                            <rect key="frame" x="32" y="9.5" width="132" height="31.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="gRO-is-F3i" firstAttribute="leading" secondItem="d2b-ja-J16" secondAttribute="leading" constant="32" id="HC8-Pn-Qih"/>
+                                        <constraint firstItem="gRO-is-F3i" firstAttribute="centerY" secondItem="d2b-ja-J16" secondAttribute="centerY" id="aUF-Wl-A6e"/>
+                                        <constraint firstItem="gRO-is-F3i" firstAttribute="centerY" secondItem="d2b-ja-J16" secondAttribute="centerY" id="eOn-Kp-tbR"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gRO-is-F3i" secondAttribute="trailing" constant="20" symbolic="YES" id="nkH-oh-OOJ"/>
+                                    </constraints>
+                                </collectionReusableView>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ご利用明細" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDc-3C-iSj">
-                                <rect key="frame" x="32" y="76" width="152" height="36"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ld4-MI-yxe" firstAttribute="top" secondItem="JDc-3C-iSj" secondAttribute="bottom" constant="32" id="UCw-cj-D0C"/>
-                            <constraint firstItem="JDc-3C-iSj" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="32" id="h9A-xu-tBI"/>
+                            <constraint firstItem="ld4-MI-yxe" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="O2U-by-NHU"/>
                             <constraint firstItem="ld4-MI-yxe" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="ibu-ea-Hhp"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="ld4-MI-yxe" secondAttribute="bottom" id="jXc-Ce-b1F"/>
-                            <constraint firstItem="JDc-3C-iSj" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="32" id="qc4-ED-VUw"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ld4-MI-yxe" secondAttribute="trailing" id="sWV-ZY-ALT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
