@@ -32,7 +32,7 @@
                                             </label>
                                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ARm-8x-gxX">
                                                 <rect key="frame" x="0.0" y="93" width="414" height="200"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="HPY-RP-eVT"/>
                                                 </constraints>
@@ -61,7 +61,7 @@
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dsf-hU-qqV">
                                                 <rect key="frame" x="0.0" y="378" width="414" height="150"/>
-                                                <color key="backgroundColor" red="0.93333333330000001" green="0.94117647059999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="QfB-d9-6Ax"/>
                                                 </constraints>
@@ -83,7 +83,7 @@
                                                 </cells>
                                             </collectionView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.93333333330000001" green="0.94117647059999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstItem="bh9-xn-oFU" firstAttribute="top" secondItem="ght-k1-t7N" secondAttribute="top" constant="32" id="4Qw-8N-UdQ"/>
                                             <constraint firstItem="ARm-8x-gxX" firstAttribute="top" secondItem="bh9-xn-oFU" secondAttribute="bottom" constant="32" id="9mk-Pi-e9B"/>
