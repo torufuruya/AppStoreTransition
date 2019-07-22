@@ -139,41 +139,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-3w-vjH">
-                                <rect key="frame" x="0.0" y="373" width="414" height="150"/>
-                                <color key="backgroundColor" red="0.93333333330000001" green="0.94117647059999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="Mfl-0O-Tu7"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bip-Kf-mtA">
-                                    <size key="itemSize" width="150" height="150"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="32" minY="0.0" maxX="32" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Vhf-mY-dhq">
-                                        <rect key="frame" x="32" y="0.0" width="150" height="150"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="qee-hy-joy">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.94117647059999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="Wc2-3w-vjH" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" id="QwK-24-wK8"/>
-                            <constraint firstItem="Wc2-3w-vjH" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" id="i1b-4Q-la1"/>
-                            <constraint firstItem="O1u-W8-tvY" firstAttribute="trailing" secondItem="Wc2-3w-vjH" secondAttribute="trailing" id="n9U-gI-O7l"/>
+                            <constraint firstItem="qee-hy-joy" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" id="CKA-hw-s7d"/>
+                            <constraint firstItem="qee-hy-joy" firstAttribute="top" secondItem="O1u-W8-tvY" secondAttribute="top" id="erR-Tc-AMS"/>
+                            <constraint firstItem="O1u-W8-tvY" firstAttribute="bottom" secondItem="qee-hy-joy" secondAttribute="bottom" id="gdz-r9-dSh"/>
+                            <constraint firstItem="O1u-W8-tvY" firstAttribute="trailing" secondItem="qee-hy-joy" secondAttribute="trailing" id="yeA-sh-vN2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
                     <connections>
-                        <outlet property="collectionView" destination="Wc2-3w-vjH" id="E5g-O5-ekf"/>
+                        <outlet property="tableView" destination="qee-hy-joy" id="YtR-Oa-oFo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

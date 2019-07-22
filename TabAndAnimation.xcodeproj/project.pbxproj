@@ -18,6 +18,8 @@
 		FD8C7B3822E1AACD00D307F6 /* DismissSmallCardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8C7B3422E1AACD00D307F6 /* DismissSmallCardAnimator.swift */; };
 		FD8C7B3922E1AACD00D307F6 /* SmallCardPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8C7B3522E1AACD00D307F6 /* SmallCardPresentationController.swift */; };
 		FD8C7B3A22E1AACD00D307F6 /* SmallCardTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8C7B3622E1AACD00D307F6 /* SmallCardTransition.swift */; };
+		FD8C7B4122E59D6300D307F6 /* CardCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8C7B3F22E59D6300D307F6 /* CardCollectionTableViewCell.swift */; };
+		FD8C7B4222E59D6300D307F6 /* CardCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C7B4022E59D6300D307F6 /* CardCollectionTableViewCell.xib */; };
 		FDE597DA22E01A3F00C8AC0B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */; };
 		FDE597DB22E01A3F00C8AC0B /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */; };
 		FDE597DE22E01AB900C8AC0B /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE597DD22E01AB900C8AC0B /* CardContentView.swift */; };
@@ -45,6 +47,8 @@
 		FD8C7B3422E1AACD00D307F6 /* DismissSmallCardAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissSmallCardAnimator.swift; sourceTree = "<group>"; };
 		FD8C7B3522E1AACD00D307F6 /* SmallCardPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallCardPresentationController.swift; sourceTree = "<group>"; };
 		FD8C7B3622E1AACD00D307F6 /* SmallCardTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallCardTransition.swift; sourceTree = "<group>"; };
+		FD8C7B3F22E59D6300D307F6 /* CardCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		FD8C7B4022E59D6300D307F6 /* CardCollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardCollectionTableViewCell.xib; sourceTree = "<group>"; };
 		FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		FDE597DD22E01AB900C8AC0B /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 				FDE597EE22E0707000C8AC0B /* CardTransition.swift */,
 				FDE597EC22E0704F00C8AC0B /* DismissCardAnimator.swift */,
 				FDE597EA22E0702C00C8AC0B /* PresentCardAnimator.swift */,
+				FD8C7B3F22E59D6300D307F6 /* CardCollectionTableViewCell.swift */,
+				FD8C7B4022E59D6300D307F6 /* CardCollectionTableViewCell.xib */,
 			);
 			path = LargeCard;
 			sourceTree = "<group>";
@@ -209,6 +215,7 @@
 				FDE597E022E01AC600C8AC0B /* CardContentView.xib in Resources */,
 				FD41942922DFFA5400D9DE06 /* Assets.xcassets in Resources */,
 				FDE597E822E01FC900C8AC0B /* CardCollectionViewCell.xib in Resources */,
+				FD8C7B4222E59D6300D307F6 /* CardCollectionTableViewCell.xib in Resources */,
 				FD41942722DFFA5200D9DE06 /* Main.storyboard in Resources */,
 				FDE597DB22E01A3F00C8AC0B /* DetailViewController.xib in Resources */,
 			);
@@ -225,6 +232,7 @@
 				FD41942022DFFA5200D9DE06 /* AppDelegate.swift in Sources */,
 				FD8C7B3A22E1AACD00D307F6 /* SmallCardTransition.swift in Sources */,
 				FDE597DE22E01AB900C8AC0B /* CardContentView.swift in Sources */,
+				FD8C7B4122E59D6300D307F6 /* CardCollectionTableViewCell.swift in Sources */,
 				FDE597E722E01FC900C8AC0B /* CardCollectionViewCell.swift in Sources */,
 				FD8C7B3722E1AACD00D307F6 /* PresentSmallCardAnimator.swift in Sources */,
 				FDE597EB22E0702C00C8AC0B /* PresentCardAnimator.swift in Sources */,

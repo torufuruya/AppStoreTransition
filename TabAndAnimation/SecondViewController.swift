@@ -10,89 +10,102 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
-
-    private var transition: SmallCardTransition?
+    @IBOutlet weak var tableView: UITableView!
 
     private var viewModels = [
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3")
+        [
+            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2")
+        ],
+        [
+            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3"),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 4"),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 5")
+        ]
     ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView.delaysContentTouches = false
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.clipsToBounds = false
-        self.collectionView.register(UINib(nibName: "\(CardCollectionViewCell.self)", bundle: nil), forCellWithReuseIdentifier: "Card")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: "CardCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CardCollectionTableViewCell")
     }
 }
 
-extension SecondViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension SecondViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.viewModels.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0, 1:
+            return tableView.dequeueReusableCell(withIdentifier: "CardCollectionTableViewCell", for: indexPath)
+        default:
+            return UITableViewCell()
+        }
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
-        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
-        return cell
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: .init(x: 0, y: 0, width: tableView.bounds.width, height: 50))
+        let label = UILabel(frame: .init(x: 32, y: 0, width: 100, height: 50))
+        let font: UIFont
+        if section == 0 {
+            font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        } else {
+            font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        }
+        label.font = font
+        label.text = "Label \(section + 1)"
+        header.addSubview(label)
+        return header
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
-        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0: return 50.0
+        case 1: return 30.0
+        default: return .zero
+        }
     }
 }
 
-extension SecondViewController: UICollectionViewDelegateFlowLayout {
+extension SecondViewController: UITableViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 150)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cardHorizontalOffset = 32
+        let cardHeightByWidthRatio: CGFloat = 0.6
+        let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
+        let height: CGFloat = width * cardHeightByWidthRatio
+        return height
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detail = DetailViewController()
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let viewModels = self.viewModels[indexPath.section]
 
-        // Get tapped cell location
-        let cell = collectionView.cellForItem(at: indexPath) as! CardCollectionViewCell
-        // Get current frame on screen
-        let currentCellFrame = cell.layer.presentation()!.frame
-        // Convert current frame to screen's coordinates
-        let cardPresentationFrameOnScreen = cell.superview!.convert(currentCellFrame, to: nil)
-        // Get card frame without transform in screen's coordinates  (for the dismissing back later to original location)
-        let cardFrameWithoutTransform = { () -> CGRect in
-            let center = cell.center
-            let size = cell.bounds.size
-            let r = CGRect(
-                x: center.x - size.width / 2,
-                y: center.y - size.height / 2,
-                width: size.width,
-                height: size.height
-            )
-            return cell.superview!.convert(r, to: nil)
-        }()
+        guard let cell = cell as? CardCollectionTableViewCell else {
+            return
+        }
+        cell.viewModels = viewModels
+        cell.viewController = self
 
-        let params = SmallCardTransition.Params(
-            fromCardFrame: cardPresentationFrameOnScreen,
-            fromCardFrameWithoutTransform: cardFrameWithoutTransform,
-            fromCell: cell)
-        self.transition = SmallCardTransition(params: params)
-        detail.transitioningDelegate = self.transition
-
-        // If `modalPresentationStyle` is not `.fullScreen`, this should be set to true to make status bar depends on presented vc.
-        detail.modalPresentationCapturesStatusBarAppearance = true
-        detail.modalPresentationStyle = .custom
-
-        detail.viewModel = self.viewModels[indexPath.row]
-
-        self.present(detail, animated: true)
+        if indexPath.section == 0 {
+            let cardHorizontalOffset = 32
+            let cardHeightByWidthRatio: CGFloat = 0.6
+            let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
+            let height: CGFloat = width * cardHeightByWidthRatio
+            cell.cellSize = CGSize(width: width, height: height)
+        } else {
+            cell.cellSize = CGSize(width: 150, height: 150)
+        }
     }
 }
