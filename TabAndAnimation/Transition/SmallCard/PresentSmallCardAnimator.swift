@@ -47,7 +47,7 @@ final class PresentSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
         let dampFactorInterval: CGFloat = 0.3
         let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
 
-        // Duration between 0.5 (nearer) and 0.9 (nearer)
+        // Duration between 0.5 (nearer) and 0.9 (far away)
         let baselineDuration: TimeInterval = 0.5
         let maxDuration: TimeInterval = 0.9
         let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
@@ -170,18 +170,11 @@ final class PresentSmallCardTransitionDriver {
         }
 
         baseAnimator.addAnimations {
-
-            // Spring animation for bouncing up
             animateContainerBouncingUp()
-
-            // Linear animation for expansion
-            let cardExpanding = UIViewPropertyAnimator(duration: baseAnimator.duration * 0.6, curve: .linear) {
-                animateCardDetailViewSizing()
-            }
-            cardExpanding.startAnimation()
+            animateCardDetailViewSizing()
         }
 
-        baseAnimator.addCompletion { (_) in
+        baseAnimator.addCompletion { _ in
             completeEverything()
         }
 
