@@ -8,13 +8,36 @@
 
 import UIKit
 
-final class SectionHeader: UICollectionReusableView {
-    @IBOutlet weak var sectionLabel: UILabel!
+class CardCollectionViewFlowLayout: UICollectionViewFlowLayout {
+
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        // Page width used for estimating and calculating paging.
+        let pageWidth = self.itemSize.width + self.minimumLineSpacing
+
+        // Make an estimation of the current page position.
+        let approximatePage = self.collectionView!.contentOffset.x/pageWidth
+
+        // Determine the current page based on velocity.
+        let currentPage = (velocity.x < 0.0) ? floor(approximatePage) : ceil(approximatePage)
+
+        // Create custom flickVelocity.
+        let flickVelocity = velocity.x * 0.3
+
+        // Check how many pages the user flicked, if <= 1 then flickedPages should return 0.
+        let flickedPages = (abs(round(flickVelocity)) <= 1) ? 0 : round(flickVelocity)
+
+        // Calculate newHorizontalOffset.
+        let newHorizontalOffset = ((currentPage + flickedPages) * pageWidth) - self.collectionView!.contentInset.left
+
+        return CGPoint(x: newHorizontalOffset, y: proposedContentOffset.y)
+    }
 }
 
 class FirstViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewForSmall: UICollectionView!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
 
     private var transition: CardTransition?
 
@@ -22,6 +45,14 @@ class FirstViewController: UIViewController {
         CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
         CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
         CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3")
+    ]
+
+    private var viewModelsForSmall = [
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 4"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 5")
     ]
 
     override func viewDidLoad() {
@@ -32,6 +63,23 @@ class FirstViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.clipsToBounds = false
         self.collectionView.register(UINib(nibName: "\(CardCollectionViewCell.self)", bundle: nil), forCellWithReuseIdentifier: "Card")
+
+        let cardLayout = CardCollectionViewFlowLayout()
+        cardLayout.scrollDirection = .horizontal
+        cardLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        self.collectionView.collectionViewLayout = cardLayout
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let cardLayout = self.collectionView.collectionViewLayout as? CardCollectionViewFlowLayout {
+            let cardHorizontalOffset: CGFloat = 20
+            let cardHeightByWidthRatio: CGFloat = 0.6
+            let width = collectionView.bounds.size.width - 2 * cardHorizontalOffset
+            let height: CGFloat = width * cardHeightByWidthRatio
+            self.collectionViewHeight.constant = height
+            cardLayout.itemSize = CGSize(width: width, height: height)
+        }
     }
 }
 
@@ -54,28 +102,9 @@ extension FirstViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Card", for: indexPath) as! CardCollectionViewCell
         cell.cardContentView.viewModel = self.viewModels[indexPath.row]
     }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCell", for: indexPath)
-        }
-        return UICollectionReusableView()
-    }
 }
 
 extension FirstViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 100)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cardHorizontalOffset: CGFloat = 20
-        let cardHeightByWidthRatio: CGFloat = 1.2
-        let width = collectionView.bounds.size.width - 2 * cardHorizontalOffset
-        let height: CGFloat = width * cardHeightByWidthRatio
-        return CGSize(width: width, height: height)
-    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detail = DetailViewController()
