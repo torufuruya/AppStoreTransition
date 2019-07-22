@@ -16,7 +16,13 @@ class SmallCardPresentationController: UIPresentationController {
         let container = containerView!
         blurView.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(blurView)
-        blurView.edges(to: container)
+        // Use fixed width and height constraint because
+        // constraints to container will be removed in DismissCardAnimator.
+//        blurView.edges(to: container)
+        NSLayoutConstraint.activate([
+            blurView.widthAnchor.constraint(equalToConstant: container.bounds.width),
+            blurView.heightAnchor.constraint(equalToConstant: container.bounds.height)
+        ])
         blurView.alpha = 0.0
 
         presentingViewController.beginAppearanceTransition(false, animated: false)
