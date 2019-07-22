@@ -144,6 +144,7 @@ final class PresentSmallCardTransitionDriver {
             detailViewHeightConstraint.constant = animatedContainerView.bounds.height
             detailViewLeadingConstraint.constant = 0
             detailView.layer.cornerRadius = 0
+            detailView.clipsToBounds = true
             container.layoutIfNeeded()
         }
 
