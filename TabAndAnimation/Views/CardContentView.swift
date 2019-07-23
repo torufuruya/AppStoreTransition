@@ -8,10 +8,16 @@
 
 import UIKit
 
-struct CardContentViewModel {
+class CardContentViewModel: ViewModel {
     let image: UIImage
     let primary: String
     let secondary: String
+
+    init(image: UIImage, primary: String, secondary: String) {
+        self.image = image
+        self.primary = primary
+        self.secondary = secondary
+    }
 }
 
 class CardContentView: UIView, NibLoadable {

@@ -8,9 +8,12 @@
 
 import UIKit
 
+class ViewModel {
+}
+
 protocol CardTableViewCell {
     var viewController: UIViewController? { get set }
-    var viewModels: [CardContentViewModel] { get set }
+    var viewModels: [ViewModel] { get set }
 }
 
 class CardCollectionTableViewCell: UITableViewCell, CardTableViewCell {
@@ -19,10 +22,13 @@ class CardCollectionTableViewCell: UITableViewCell, CardTableViewCell {
 
     weak var viewController: UIViewController?
 
-    var viewModels: [CardContentViewModel] = [] {
+    var viewModels: [ViewModel] = [] {
         didSet {
             self.collectionView.reloadData()
         }
+    }
+    private var _viewModels: [CardContentViewModel]? {
+        return self.viewModels as? [CardContentViewModel]
     }
 
     private var transition: SmallCardTransition?
@@ -61,7 +67,7 @@ extension CardCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCollectionViewCell", for: indexPath) as! CardCollectionViewCell
-        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
+        cell.cardContentView.viewModel = self._viewModels?[indexPath.row]
         return cell
     }
 
@@ -77,7 +83,7 @@ extension CardCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCollectionViewCell", for: indexPath) as! CardCollectionViewCell
-        cell.cardContentView.viewModel = self.viewModels[indexPath.row]
+        cell.cardContentView.viewModel = self._viewModels?[indexPath.row]
     }
 }
 
@@ -116,7 +122,7 @@ extension CardCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
         detail.modalPresentationCapturesStatusBarAppearance = true
         detail.modalPresentationStyle = .custom
 
-        detail.viewModel = self.viewModels[indexPath.row]
+        detail.viewModel = self._viewModels?[indexPath.row]
 
         self.viewController?.present(detail, animated: true)
     }

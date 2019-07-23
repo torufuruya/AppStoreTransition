@@ -14,8 +14,8 @@ class SecondViewController: UIViewController {
 
     private var viewModels = [
         [
-            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "5月", secondary: "¥25,000"),
-            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "6月", secondary: "¥12,300")
+            StatementViewModel(month: "5月", price: "¥25,000", dueDate: "6月10日"),
+            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日")
         ],
         [
             CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "3月", secondary: "¥3,400"),
@@ -32,6 +32,7 @@ class SecondViewController: UIViewController {
         self.tableView.delaysContentTouches = false
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.register(UINib(nibName: "\(StatementCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementCard")
         self.tableView.register(UINib(nibName: "\(CardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "Card")
         self.tableView.register(UINib(nibName: "\(SmallCardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "SmallCard")
     }
@@ -51,7 +52,7 @@ extension SecondViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "Card", for: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: "StatementCard", for: indexPath)
         case 1:
             return tableView.dequeueReusableCell(withIdentifier: "SmallCard", for: indexPath)
         default:
