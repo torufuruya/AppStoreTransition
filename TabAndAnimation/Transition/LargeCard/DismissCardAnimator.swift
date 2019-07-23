@@ -119,7 +119,7 @@ final class DismissCardAnimator: NSObject, UIViewControllerAnimatedTransitioning
         }
 
         UIView.animate(withDuration: transitionDuration(using: ctx) * 0.6) {
-            screens.detail.scrollView.contentOffset = .zero
+//            screens.detail.scrollView.contentOffset = .zero
         }
     }
 }

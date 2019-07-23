@@ -42,9 +42,9 @@ class FirstViewController: UIViewController {
     private var transition: CardTransition?
 
     private var viewModels = [
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3")
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "3月", secondary: "¥3,400"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "4月", secondary: "¥120,000"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "5月", secondary: "¥25,000")
     ]
 
     private let smallCardCollection = SmallCardCollection()
@@ -159,11 +159,11 @@ class SmallCardCollection: NSObject, UICollectionViewDelegate, UICollectionViewD
     private var transition: SmallCardTransition?
 
     private var viewModels = [
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 1"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 2"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 3"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "Card 4"),
-        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Card 5")
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "3月", secondary: "¥3,400"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "4月", secondary: "¥120,000"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "5月", secondary: "¥25,000"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "6月", secondary: "¥12,300"),
+        CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "7月", secondary: "¥7,700")
     ]
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {

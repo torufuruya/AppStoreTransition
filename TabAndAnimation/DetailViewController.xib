@@ -14,8 +14,7 @@
             <connections>
                 <outlet property="cardContentView" destination="H92-Nf-qaR" id="q1V-VK-YKe"/>
                 <outlet property="dismissButton" destination="WW4-K0-Gjv" id="TWs-M4-6Tb"/>
-                <outlet property="scrollView" destination="RKM-Ve-R9e" id="Xcc-TM-B1h"/>
-                <outlet property="textView" destination="DfC-Kv-obb" id="cYu-pq-bxW"/>
+                <outlet property="tableView" destination="94S-tE-23s" id="t59-ry-Kmg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,64 +23,35 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKM-Ve-R9e">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Jb-dw-wpu">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H92-Nf-qaR" customClass="CardContentView" customModule="TabAndAnimation" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="310.5"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="H92-Nf-qaR" secondAttribute="height" multiplier="4:3" id="Dg2-lT-FkL"/>
-                                    </constraints>
-                                </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WW4-K0-Gjv">
-                                    <rect key="frame" x="343" y="32" width="39" height="30"/>
-                                    <state key="normal" title="Close"/>
-                                    <connections>
-                                        <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="HSt-sa-79m"/>
-                                    </connections>
-                                </button>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DfC-Kv-obb">
-                                    <rect key="frame" x="0.0" y="310.5" width="414" height="489.5"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="DfC-Kv-obb" firstAttribute="leading" secondItem="2Jb-dw-wpu" secondAttribute="leading" id="8Nq-qd-XSu"/>
-                                <constraint firstAttribute="height" constant="800" placeholder="YES" id="E3F-KK-mSM"/>
-                                <constraint firstItem="H92-Nf-qaR" firstAttribute="top" secondItem="2Jb-dw-wpu" secondAttribute="top" id="Mjd-g4-D7w"/>
-                                <constraint firstItem="DfC-Kv-obb" firstAttribute="top" secondItem="H92-Nf-qaR" secondAttribute="bottom" id="NRM-4m-tLf"/>
-                                <constraint firstAttribute="trailing" secondItem="H92-Nf-qaR" secondAttribute="trailing" id="cyp-gc-ayy"/>
-                                <constraint firstItem="H92-Nf-qaR" firstAttribute="leading" secondItem="2Jb-dw-wpu" secondAttribute="leading" id="gdb-YJ-GQ4"/>
-                                <constraint firstAttribute="bottom" secondItem="DfC-Kv-obb" secondAttribute="bottom" priority="250" id="jk3-FG-zUn"/>
-                                <constraint firstAttribute="trailing" secondItem="WW4-K0-Gjv" secondAttribute="trailing" constant="32" id="l6M-7U-Fpa"/>
-                                <constraint firstAttribute="trailing" secondItem="DfC-Kv-obb" secondAttribute="trailing" id="p61-O3-NDE"/>
-                                <constraint firstItem="WW4-K0-Gjv" firstAttribute="top" secondItem="2Jb-dw-wpu" secondAttribute="top" constant="32" id="vjm-ls-C6W"/>
-                            </constraints>
-                        </view>
-                    </subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H92-Nf-qaR" customClass="CardContentView" customModule="TabAndAnimation" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="310.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="2Jb-dw-wpu" secondAttribute="bottom" id="02E-xa-whH"/>
-                        <constraint firstAttribute="trailing" secondItem="2Jb-dw-wpu" secondAttribute="trailing" id="Q9K-ZH-bNw"/>
-                        <constraint firstItem="2Jb-dw-wpu" firstAttribute="top" secondItem="RKM-Ve-R9e" secondAttribute="top" id="qX4-We-XaR"/>
-                        <constraint firstItem="2Jb-dw-wpu" firstAttribute="leading" secondItem="RKM-Ve-R9e" secondAttribute="leading" id="zgI-YM-j3D"/>
+                        <constraint firstAttribute="width" secondItem="H92-Nf-qaR" secondAttribute="height" multiplier="4:3" id="Dg2-lT-FkL"/>
                     </constraints>
-                </scrollView>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WW4-K0-Gjv">
+                    <rect key="frame" x="343" y="76" width="39" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Close"/>
+                    <connections>
+                        <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="HSt-sa-79m"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="94S-tE-23s">
+                    <rect key="frame" x="0.0" y="354.5" width="414" height="507.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="RKM-Ve-R9e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="6Mh-tR-Gw2"/>
-                <constraint firstItem="RKM-Ve-R9e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="PeG-V3-xw6"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="RKM-Ve-R9e" secondAttribute="bottom" id="T2b-ee-Bdc"/>
-                <constraint firstItem="2Jb-dw-wpu" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="TZS-Q0-2cq"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RKM-Ve-R9e" secondAttribute="trailing" id="sVn-4G-5IV"/>
+                <constraint firstItem="94S-tE-23s" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="0Y0-K1-ZhD"/>
+                <constraint firstItem="H92-Nf-qaR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="75v-qQ-mUB"/>
+                <constraint firstItem="94S-tE-23s" firstAttribute="top" secondItem="H92-Nf-qaR" secondAttribute="bottom" id="IJB-90-bB2"/>
+                <constraint firstItem="H92-Nf-qaR" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Uos-za-Eta"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="94S-tE-23s" secondAttribute="bottom" id="h8W-vU-6MB"/>
+                <constraint firstItem="H92-Nf-qaR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kMt-m7-mJ9"/>
+                <constraint firstItem="94S-tE-23s" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tmd-2q-rJj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

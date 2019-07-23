@@ -11,6 +11,7 @@ import UIKit
 struct CardContentViewModel {
     let image: UIImage
     let primary: String
+    let secondary: String
 }
 
 class CardContentView: UIView, NibLoadable {
