@@ -8,7 +8,12 @@
 
 import UIKit
 
-class CardCollectionTableViewCell: UITableViewCell {
+protocol CardTableViewCell {
+    var viewController: UIViewController? { get set }
+    var viewModels: [CardContentViewModel] { get set }
+}
+
+class CardCollectionTableViewCell: UITableViewCell, CardTableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -17,11 +22,6 @@ class CardCollectionTableViewCell: UITableViewCell {
     var viewModels: [CardContentViewModel] = [] {
         didSet {
             self.collectionView.reloadData()
-        }
-    }
-    var cellSize: CGSize = .zero {
-        didSet {
-            self.cardLayout.itemSize = cellSize
         }
     }
 
@@ -66,7 +66,13 @@ extension CardCollectionTableViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.cellSize
+        let cardHorizontalOffset = self.cardLayoutInset.left
+        let cardHeightByWidthRatio: CGFloat = 0.6
+        let width = collectionView.bounds.width - CGFloat(2 * cardHorizontalOffset)
+        let height: CGFloat = width * cardHeightByWidthRatio
+        let size = CGSize(width: width, height: height)
+        self.cardLayout.itemSize = size
+        return size
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

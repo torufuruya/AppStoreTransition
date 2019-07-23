@@ -29,9 +29,11 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView.delaysContentTouches = false
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.register(UINib(nibName: "CardCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CardCollectionTableViewCell")
+        self.tableView.register(UINib(nibName: "\(CardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "Card")
+        self.tableView.register(UINib(nibName: "\(SmallCardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "SmallCard")
     }
 }
 
@@ -48,8 +50,10 @@ extension SecondViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 0, 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CardCollectionTableViewCell", for: indexPath)
+        case 0:
+            return tableView.dequeueReusableCell(withIdentifier: "Card", for: indexPath)
+        case 1:
+            return tableView.dequeueReusableCell(withIdentifier: "SmallCard", for: indexPath)
         default:
             return UITableViewCell()
         }
@@ -73,7 +77,7 @@ extension SecondViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return 50.0
-        case 1: return 30.0
+        case 1: return 40.0
         default: return .zero
         }
     }
@@ -82,30 +86,25 @@ extension SecondViewController: UITableViewDataSource {
 extension SecondViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cardHorizontalOffset = 32
-        let cardHeightByWidthRatio: CGFloat = 0.6
-        let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
-        let height: CGFloat = width * cardHeightByWidthRatio
-        return height
+        switch indexPath.section {
+        case 0:
+            let cardHorizontalOffset = 32
+            let cardHeightByWidthRatio: CGFloat = 0.6
+            let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
+            let height: CGFloat = width * cardHeightByWidthRatio
+            return height
+        case 1: return 150
+        default: return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let viewModels = self.viewModels[indexPath.section]
 
-        guard let cell = cell as? CardCollectionTableViewCell else {
+        guard var cell = cell as? CardTableViewCell else {
             return
         }
         cell.viewModels = viewModels
         cell.viewController = self
-
-        if indexPath.section == 0 {
-            let cardHorizontalOffset = 32
-            let cardHeightByWidthRatio: CGFloat = 0.6
-            let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
-            let height: CGFloat = width * cardHeightByWidthRatio
-            cell.cellSize = CGSize(width: width, height: height)
-        } else {
-            cell.cellSize = CGSize(width: 150, height: 150)
-        }
     }
 }
