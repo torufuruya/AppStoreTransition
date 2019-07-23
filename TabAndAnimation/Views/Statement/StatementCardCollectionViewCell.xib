@@ -19,50 +19,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osT-mn-LR2">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osT-mn-LR2" customClass="StatementContentView" customModule="TabAndAnimation" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szh-yY-Dsw">
-                                <rect key="frame" x="89" y="41.5" width="22" height="16"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abb-Ya-70O">
-                                <rect key="frame" x="66" y="128.5" width="68" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.3921568627" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="jmd-Y9-XRo"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="支払う">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥25,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlA-ae-fVJ">
-                                <rect key="frame" x="57.5" y="65.5" width="85" height="24"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支払い期日 6月10日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJs-dt-hml">
-                                <rect key="frame" x="45" y="97.5" width="110" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="AlA-ae-fVJ" firstAttribute="centerX" secondItem="osT-mn-LR2" secondAttribute="centerX" id="2dm-lU-lsh"/>
-                            <constraint firstItem="BJs-dt-hml" firstAttribute="top" secondItem="AlA-ae-fVJ" secondAttribute="bottom" constant="8" id="Cp9-sD-gou"/>
-                            <constraint firstItem="abb-Ya-70O" firstAttribute="top" secondItem="BJs-dt-hml" secondAttribute="bottom" constant="16" id="Ki4-3w-DyN"/>
-                            <constraint firstItem="BJs-dt-hml" firstAttribute="centerX" secondItem="osT-mn-LR2" secondAttribute="centerX" id="OAk-0j-cyD"/>
-                            <constraint firstItem="AlA-ae-fVJ" firstAttribute="top" secondItem="szh-yY-Dsw" secondAttribute="bottom" constant="8" id="huE-KD-f8P"/>
-                            <constraint firstItem="BJs-dt-hml" firstAttribute="centerY" secondItem="osT-mn-LR2" secondAttribute="centerY" constant="5" id="jZI-A1-PZL"/>
-                            <constraint firstItem="szh-yY-Dsw" firstAttribute="centerX" secondItem="osT-mn-LR2" secondAttribute="centerX" id="kXp-KH-xBH"/>
-                            <constraint firstItem="abb-Ya-70O" firstAttribute="centerX" secondItem="osT-mn-LR2" secondAttribute="centerX" id="v0G-Qe-TWg"/>
-                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -75,11 +34,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
-                <outlet property="containerView" destination="osT-mn-LR2" id="9yC-a8-ZUU"/>
-                <outlet property="dueDateLabel" destination="BJs-dt-hml" id="RCd-Do-W0g"/>
-                <outlet property="monthLabel" destination="szh-yY-Dsw" id="Nrh-Pc-Stv"/>
-                <outlet property="payButton" destination="abb-Ya-70O" id="B5H-40-Znc"/>
-                <outlet property="priceLabel" destination="AlA-ae-fVJ" id="1fd-fw-u4N"/>
+                <outlet property="statementContentView" destination="osT-mn-LR2" id="DJs-TM-vhW"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="132.58928571428572"/>
         </collectionViewCell>

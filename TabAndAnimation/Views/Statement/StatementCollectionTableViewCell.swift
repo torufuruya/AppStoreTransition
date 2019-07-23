@@ -59,13 +59,13 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
-        cell.viewModel = self._viewModels?[indexPath.row]
+        cell.statementContentView.viewModel = self._viewModels?[indexPath.row]
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cardHorizontalOffset = self.cardLayoutInset.left
-        let cardHeightByWidthRatio: CGFloat = 0.6
+        let cardHeightByWidthRatio: CGFloat = 0.9
         let width = collectionView.bounds.width - CGFloat(2 * cardHorizontalOffset)
         let height: CGFloat = width * cardHeightByWidthRatio
         let size = CGSize(width: width, height: height)
@@ -75,7 +75,7 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
-        cell.viewModel = self._viewModels?[indexPath.row]
+        cell.statementContentView.viewModel = self._viewModels?[indexPath.row]
     }
 }
 

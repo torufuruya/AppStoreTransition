@@ -57,6 +57,7 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         // Card fills inside animated container view
         detailView.edges(to: animatedContainerView)
 
+        // Drop the same shadow as fromCell
         animatedContainerView.layer.shadowColor = UIColor.black.cgColor
         animatedContainerView.layer.shadowOpacity = 0.2
         animatedContainerView.layer.shadowOffset = .init(width: 0, height: 4)
@@ -76,13 +77,13 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         ])
 
         // Fix weird top inset
-//        let topTemporaryFix = screens.detail.cardContentView.topAnchor.constraint(equalTo: detailView.topAnchor)
-//        topTemporaryFix.isActive = true
+        let topTemporaryFix = screens.detail.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 100)
+        topTemporaryFix.isActive = true
 
         container.layoutIfNeeded()
 
         // Force card filling bottom
-//        let stretchCardToFillBottom = screens.detail.cardContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
+        let stretchCardToFillBottom = screens.detail.statementContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
 
         func animateCardViewBackToPlace() {
 //            stretchCardToFillBottom.isActive = true
@@ -96,11 +97,11 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
 
             detailView.layer.cornerRadius = 16.0
             detailView.clipsToBounds = true
-//            screens.detail.dismissButton.alpha = 0.0
+            screens.detail.dismissButton.alpha = 0.0
+            screens.detail.statementContentView.monthLabel.alpha = 1.0
 
-            // Hide animatedContainer to make fromCell appearing visible
-//            animatedContainerView.alpha = 0.0
-            screens.detail.containerView.alpha = 0.0
+            // Shrink the aount of height of the upper area
+            topTemporaryFix.constant = 0.0
 
             container.layoutIfNeeded()
         }
@@ -112,14 +113,13 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             if success {
                 detailView.removeFromSuperview()
                 self.params.fromCell.isHidden = false
-                params.fromCell.containerView.alpha = 1.0
             } else {
                 // Remove temporary fixes if not success!
-//                topTemporaryFix.isActive = false
-//                stretchCardToFillBottom.isActive = false
+                topTemporaryFix.isActive = false
+                stretchCardToFillBottom.isActive = false
 
-//                detailView.removeConstraint(topTemporaryFix)
-//                detailView.removeConstraint(stretchCardToFillBottom)
+                detailView.removeConstraint(topTemporaryFix)
+                detailView.removeConstraint(stretchCardToFillBottom)
 
                 container.removeConstraints(container.constraints)
 

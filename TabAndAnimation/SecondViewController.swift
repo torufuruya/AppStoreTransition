@@ -18,11 +18,11 @@ class SecondViewController: UIViewController {
             StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日")
         ],
         [
-            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "3月", secondary: "¥3,400"),
-            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "4月", secondary: "¥120,000"),
-            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "5月", secondary: "¥25,000"),
-            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "6月", secondary: "¥12,300"),
-            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "7月", secondary: "¥7,700")
+            StatementViewModel(month: "3月", price: "¥3,400", dueDate: "4月10日"),
+            StatementViewModel(month: "4月", price: "¥120,000", dueDate: "5月10日"),
+            StatementViewModel(month: "5月", price: "¥25,000", dueDate: "6月10日"),
+            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日"),
+            StatementViewModel(month: "7月", price: "¥7,700", dueDate: "8月10日")
         ]
     ]
 
@@ -90,7 +90,7 @@ extension SecondViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let cardHorizontalOffset = 32
-            let cardHeightByWidthRatio: CGFloat = 0.6
+            let cardHeightByWidthRatio: CGFloat = 0.9
             let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
             let height: CGFloat = width * cardHeightByWidthRatio
             return height

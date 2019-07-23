@@ -8,45 +8,19 @@
 
 import UIKit
 
-class StatementViewModel: ViewModel {
-    let month: String
-    let price: String
-    let dueDate: String
-
-    init(month: String, price: String, dueDate: String) {
-        self.month = month
-        self.price = price
-        self.dueDate = dueDate
-    }
-}
-
 class StatementCardCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var monthLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var dueDateLabel: UILabel!
-    @IBOutlet weak var payButton: UIButton!
-
-    var viewModel: StatementViewModel? {
-        didSet {
-            self.monthLabel.text = viewModel?.month
-            self.priceLabel.text = viewModel?.price
-            self.dueDateLabel.text = "支払い期日 \(viewModel?.dueDate ?? "")"
-        }
-    }
+    @IBOutlet weak var statementContentView: StatementContentView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        containerView.layer.cornerRadius = 16
-        containerView.layer.masksToBounds = true
+        statementContentView.layer.cornerRadius = 16
+        statementContentView.layer.masksToBounds = true
         backgroundColor = .clear
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = .init(width: 0, height: 4)
         layer.shadowRadius = 12
-
-        self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
     }
 
     // Make it appears very responsive to touch

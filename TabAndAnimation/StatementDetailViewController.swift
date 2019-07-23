@@ -10,21 +10,24 @@ import UIKit
 
 class StatementDetailViewController: UIViewController {
 
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var dueDateLabel: UILabel!
-    @IBOutlet weak var payButton: UIButton!
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var statementContentView: StatementContentView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dismissButton: UIButton!
 
-    var viewModel: StatementViewModel?
+    var viewModel: StatementViewModel? {
+        didSet {
+            self.statementContentView?.viewModel = viewModel
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.containerView.alpha = 0.0
+        self.statementContentView.viewModel = self.viewModel
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
     }
 
     @IBAction func dismiss(_ sender: Any) {

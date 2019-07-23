@@ -57,6 +57,12 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
         // Card fills inside animated container view
         detailView.edges(to: animatedContainerView)
 
+        // Drop the same shadow as fromCell
+        animatedContainerView.layer.shadowColor = UIColor.black.cgColor
+        animatedContainerView.layer.shadowOpacity = 0.2
+        animatedContainerView.layer.shadowOffset = .init(width: 0, height: 4)
+        animatedContainerView.layer.shadowRadius = 12
+
 //        animatedContainerView.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         let animatedContainerTopConstraint = animatedContainerView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0)
         let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: detailView.frame.width)

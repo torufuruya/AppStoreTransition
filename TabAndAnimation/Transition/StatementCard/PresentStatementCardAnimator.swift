@@ -120,11 +120,11 @@ final class PresentStatementCardTransitionDriver {
         // -------------------------------
         // Final preparation
         // -------------------------------
-//        params.fromCell.isHidden = true
+        params.fromCell.isHidden = true
         params.fromCell.resetTransform()
 
-//        let topTemporaryFix = screens.detail.containerView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
-//        topTemporaryFix.isActive = true
+        let topTemporaryFix = screens.detail.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
+        topTemporaryFix.isActive = true
 
         container.layoutIfNeeded()
 
@@ -145,6 +145,9 @@ final class PresentStatementCardTransitionDriver {
             detailViewLeadingConstraint.constant = 0
             detailView.layer.cornerRadius = 0
             detailView.clipsToBounds = true
+            screens.detail.statementContentView.monthLabel.alpha = 0.0
+            // Expand the aount of height of the upper area
+            topTemporaryFix.constant = 100
             container.layoutIfNeeded()
         }
 
@@ -169,19 +172,9 @@ final class PresentStatementCardTransitionDriver {
             ctx.completeTransition(success)
         }
 
-        func fadeOutCardInfo() {
-            params.fromCell.containerView.alpha = 0.0
-        }
-
-        func fadeInDetailInfo() {
-            screens.detail.containerView.alpha = 1.0
-        }
-
         baseAnimator.addAnimations {
             animateContainerBouncingUp()
             animateCardDetailViewSizing()
-            fadeOutCardInfo()
-            fadeInDetailInfo()
         }
 
         baseAnimator.addCompletion { _ in
