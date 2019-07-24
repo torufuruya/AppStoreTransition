@@ -24,10 +24,8 @@ class StatementDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.statementContentView.viewModel = self.viewModel
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        // Expand the sizes of UI conponents
+        self.statementContentView.setState(isHighlighted: true)
     }
 
     @IBAction func dismiss(_ sender: Any) {

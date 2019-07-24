@@ -15,6 +15,8 @@
                 <outlet property="dueDateLabel" destination="UIT-k4-55f" id="p78-o5-wUa"/>
                 <outlet property="monthLabel" destination="fQN-5g-cTf" id="9fd-i5-e3z"/>
                 <outlet property="payButton" destination="ZbK-lP-Z02" id="orR-0t-NSL"/>
+                <outlet property="payButtonHeight" destination="nPt-dG-oP4" id="mLZ-rl-Ram"/>
+                <outlet property="payButtonWidth" destination="9M9-uX-4yi" id="EEu-aq-Wxf"/>
                 <outlet property="priceLabel" destination="FrH-fK-nvW" id="VYo-Fj-5cI"/>
             </connections>
         </placeholder>

@@ -26,6 +26,8 @@ class StatementContentView: UIView, NibLoadable {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var payButton: UIButton!
+    @IBOutlet weak var payButtonHeight: NSLayoutConstraint!
+    @IBOutlet weak var payButtonWidth: NSLayoutConstraint!
 
     var viewModel: StatementViewModel? {
         didSet {
@@ -58,5 +60,13 @@ class StatementContentView: UIView, NibLoadable {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
+    }
+
+    func setState(isHighlighted: Bool) {
+        let highlightedFactor: CGFloat = isHighlighted ? 1.2 : 1.0
+        let transform = CGAffineTransform(scaleX: highlightedFactor, y: highlightedFactor)
+        self.priceLabel.transform = transform
+        self.dueDateLabel.transform = transform
+        self.payButton.transform = transform
     }
 }

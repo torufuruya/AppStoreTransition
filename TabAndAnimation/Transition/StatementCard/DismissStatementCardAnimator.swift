@@ -99,7 +99,8 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             detailView.clipsToBounds = true
             screens.detail.dismissButton.alpha = 0.0
             screens.detail.statementContentView.monthLabel.alpha = 1.0
-
+            // Restore the sizes of UI conponents
+            screens.detail.statementContentView.setState(isHighlighted: false)
             // Shrink the aount of height of the upper area
             topTemporaryFix.constant = 0.0
 
