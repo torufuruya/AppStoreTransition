@@ -22,12 +22,23 @@ class StatementViewModel: ViewModel {
 
 class StatementContentView: UIView, NibLoadable {
 
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var payButton: UIButton!
-    @IBOutlet weak var payButtonHeight: NSLayoutConstraint!
-    @IBOutlet weak var payButtonWidth: NSLayoutConstraint!
+
+    // Constraints
+    @IBOutlet weak var iconToTop: NSLayoutConstraint!
+    @IBOutlet weak var iconHeight: NSLayoutConstraint!
+    @IBOutlet weak var monthLabelToIcon: NSLayoutConstraint!
+    @IBOutlet weak var messageLabelToMonthLabel: NSLayoutConstraint!
+    @IBOutlet weak var priceLabelToMessageLabel: NSLayoutConstraint!
+    @IBOutlet weak var dueDateLabelToPriceLabel: NSLayoutConstraint!
+    @IBOutlet weak var payButtonToDueDateLabel: NSLayoutConstraint!
+
+    private let priceLabelFontSize: CGFloat = 28
 
     var viewModel: StatementViewModel? {
         didSet {
@@ -55,6 +66,9 @@ class StatementContentView: UIView, NibLoadable {
     }
 
     private func commonSetup() {
+        self.messageLabel.isHidden = true
+        self.priceLabel.font = UIFont.systemFont(ofSize: self.priceLabelFontSize, weight: .bold)
+        self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
     }
 
     override func layoutSubviews() {
@@ -62,11 +76,9 @@ class StatementContentView: UIView, NibLoadable {
         self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
     }
 
-    func setState(isHighlighted: Bool) {
-        let highlightedFactor: CGFloat = isHighlighted ? 1.2 : 1.0
-        let transform = CGAffineTransform(scaleX: highlightedFactor, y: highlightedFactor)
+    func transformPriceLabel(toPointSize: CGFloat) {
+        let factor: CGFloat = toPointSize / self.priceLabelFontSize
+        let transform = CGAffineTransform(scaleX: factor, y: factor)
         self.priceLabel.transform = transform
-        self.dueDateLabel.transform = transform
-        self.payButton.transform = transform
     }
 }

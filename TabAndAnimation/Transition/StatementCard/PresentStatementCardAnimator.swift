@@ -126,6 +126,14 @@ final class PresentStatementCardTransitionDriver {
         let topTemporaryFix = screens.detail.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
         topTemporaryFix.isActive = true
 
+        // Hide icon
+        let statementContentView = screens.detail.statementContentView!
+        statementContentView.iconImageView.isHidden = true
+        statementContentView.iconHeight.constant = 0
+        // Shrink the needless spaces
+        statementContentView.monthLabelToIcon.constant = 0
+        statementContentView.priceLabelToMessageLabel.constant = 0
+
         container.layoutIfNeeded()
 
         // ------------------------------
@@ -148,6 +156,7 @@ final class PresentStatementCardTransitionDriver {
             screens.detail.statementContentView.monthLabel.alpha = 0.0
             // Expand the aount of height of the upper area
             topTemporaryFix.constant = 100
+
             container.layoutIfNeeded()
         }
 

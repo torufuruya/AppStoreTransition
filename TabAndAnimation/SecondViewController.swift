@@ -33,8 +33,7 @@ class SecondViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "\(StatementCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementCard")
-        self.tableView.register(UINib(nibName: "\(CardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "Card")
-        self.tableView.register(UINib(nibName: "\(SmallCardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "SmallCard")
+        self.tableView.register(UINib(nibName: "\(StatementSmallCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementSmallCard")
     }
 }
 
@@ -54,7 +53,7 @@ extension SecondViewController: UITableViewDataSource {
         case 0:
             return tableView.dequeueReusableCell(withIdentifier: "StatementCard", for: indexPath)
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "SmallCard", for: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: "StatementSmallCard", for: indexPath)
         default:
             return UITableViewCell()
         }
@@ -88,13 +87,8 @@ extension SecondViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0:
-            let cardHorizontalOffset = 32
-            let cardHeightByWidthRatio: CGFloat = 0.9
-            let width = tableView.bounds.width - CGFloat(2 * cardHorizontalOffset)
-            let height: CGFloat = width * cardHeightByWidthRatio
-            return height
-        case 1: return 150
+        case 0: return 280
+        case 1: return 176
         default: return 0
         }
     }

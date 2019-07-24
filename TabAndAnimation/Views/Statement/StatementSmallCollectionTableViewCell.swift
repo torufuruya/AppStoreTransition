@@ -1,5 +1,5 @@
 //
-//  StatementCollectionTableViewCell.swift
+//  StatementSmallCollectionTableViewCell.swift
 //  TabAndAnimation
 //
 //  Created by Toru Furuya on 2019/07/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StatementCollectionTableViewCell: UITableViewCell, CardTableViewCell {
+class StatementSmallCollectionTableViewCell: UITableViewCell, CardTableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -23,9 +23,11 @@ class StatementCollectionTableViewCell: UITableViewCell, CardTableViewCell {
         return self.viewModels as? [StatementViewModel]
     }
 
-    private var transition: StatementCardTransition?
+    private var transition: SmallStatementCardTransition?
 
-    private let cardLayout = CardCollectionViewFlowLayout()
+    private var cardLayout: UICollectionViewFlowLayout? {
+        return self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+    }
     private let cardLayoutInset = UIEdgeInsets(top: 0, left: 32.0, bottom: 0, right: 32.0)
 
     override func awakeFromNib() {
@@ -38,9 +40,9 @@ class StatementCollectionTableViewCell: UITableViewCell, CardTableViewCell {
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.register(UINib(nibName: "\(StatementCardCollectionViewCell.self)", bundle: nil), forCellWithReuseIdentifier: "Cell")
 
-        self.cardLayout.scrollDirection = .horizontal
-        self.cardLayout.sectionInset = self.cardLayoutInset
-        self.collectionView.collectionViewLayout = self.cardLayout
+        self.cardLayout?.scrollDirection = .horizontal
+        self.cardLayout?.sectionInset = self.cardLayoutInset
+        self.cardLayout?.minimumLineSpacing = 15
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -48,7 +50,7 @@ class StatementCollectionTableViewCell: UITableViewCell, CardTableViewCell {
     }
 }
 
-extension StatementCollectionTableViewCell: UICollectionViewDataSource {
+extension StatementSmallCollectionTableViewCell: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -61,27 +63,34 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
         let statement = cell.statementContentView
         statement?.viewModel = self._viewModels?[indexPath.row]
-        statement?.monthLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        statement?.priceLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
 
-        // Hide icon
-        statement?.iconImageView.isHidden = true
-        statement?.iconHeight.constant = 0
-
-        // Shrink the needless spaces
-        statement?.monthLabelToIcon.constant = 0
+        // Hide message
+        statement?.messageLabel.isHidden = true
+        statement?.messageLabelToMonthLabel.constant = 0
         statement?.priceLabelToMessageLabel.constant = 0
+
+        // Hide dueDate label
+        statement?.dueDateLabel.isHidden = true
+
+        // Fix font
+        statement?.monthLabel.font = .systemFont(ofSize: 16, weight: .bold)
+        statement?.priceLabel.font = .systemFont(ofSize: 16, weight: .bold)
+
+        // NOTE: Don't hide dueDateLabel and payButton explicitly.
+        // They are supposed to be hidden by cell's clipToBounds=true.
+        // It enables us to show them in the detail view w/o doing anything.
 
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let lineSpacing: CGFloat = 15
         let cardHorizontalOffset = self.cardLayoutInset.left
-        let width = collectionView.bounds.width - CGFloat(2 * cardHorizontalOffset)
-        let height: CGFloat = 280
-        let size = CGSize(width: width, height: height)
-        self.cardLayout.itemSize = size
-        return size
+        let numberOfVisibleCell: CGFloat = 2
+
+        let width = (collectionView.bounds.width - lineSpacing - cardHorizontalOffset * 2) / numberOfVisibleCell
+        let height: CGFloat = 176
+        return .init(width: width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -90,7 +99,7 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
     }
 }
 
-extension StatementCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
+extension StatementSmallCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detail = StatementDetailViewController()
@@ -114,11 +123,11 @@ extension StatementCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
             return cell.superview!.convert(r, to: nil)
         }()
 
-        let params = StatementCardTransition.Params(
+        let params = SmallStatementCardTransition.Params(
             fromCardFrame: cardPresentationFrameOnScreen,
             fromCardFrameWithoutTransform: cardFrameWithoutTransform,
             fromCell: cell)
-        self.transition = StatementCardTransition(params: params)
+        self.transition = SmallStatementCardTransition(params: params)
         detail.transitioningDelegate = self.transition
 
         // If `modalPresentationStyle` is not `.fullScreen`, this should be set to true to make status bar depends on presented vc.

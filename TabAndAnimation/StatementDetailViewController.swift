@@ -24,8 +24,8 @@ class StatementDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.statementContentView.viewModel = self.viewModel
-        // Expand the sizes of UI conponents
-        self.statementContentView.setState(isHighlighted: true)
+        // Expand the size of price label
+        self.statementContentView.transformPriceLabel(toPointSize: self.statementContentView.priceLabel.font.pointSize)
     }
 
     @IBAction func dismiss(_ sender: Any) {
