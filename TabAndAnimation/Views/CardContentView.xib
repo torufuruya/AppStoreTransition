@@ -28,8 +28,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="176" height="176"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paidyとは？" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVk-oa-Cgm">
-                            <rect key="frame" x="8" y="115" width="160" height="29"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                            <rect key="frame" x="16" y="120" width="152" height="24"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -37,7 +37,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Bpe-LQ-Qy6" secondAttribute="trailing" id="8uk-SF-AUs"/>
-                        <constraint firstItem="VVk-oa-Cgm" firstAttribute="leading" secondItem="McP-hZ-xkf" secondAttribute="leading" constant="8" id="O30-ER-Ddh"/>
+                        <constraint firstItem="VVk-oa-Cgm" firstAttribute="leading" secondItem="McP-hZ-xkf" secondAttribute="leading" constant="16" id="O30-ER-Ddh"/>
                         <constraint firstAttribute="trailing" secondItem="VVk-oa-Cgm" secondAttribute="trailing" constant="8" id="RwI-NQ-bwP"/>
                         <constraint firstItem="Bpe-LQ-Qy6" firstAttribute="top" secondItem="McP-hZ-xkf" secondAttribute="top" id="UGW-th-pSt"/>
                         <constraint firstItem="Bpe-LQ-Qy6" firstAttribute="leading" secondItem="McP-hZ-xkf" secondAttribute="leading" id="WJD-N8-a6p"/>

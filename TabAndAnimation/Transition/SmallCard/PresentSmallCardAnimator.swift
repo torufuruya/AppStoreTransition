@@ -123,8 +123,14 @@ final class PresentSmallCardTransitionDriver {
         params.fromCell.isHidden = true
         params.fromCell.resetTransform()
 
-        let topTemporaryFix = screens.detail.cardContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
+        let cardContentView = screens.detail.cardContentView!
+
+        let topTemporaryFix = cardContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
         topTemporaryFix.isActive = true
+
+        // Stretch statement content view to fill the small card.
+        let stretchCardToFillBottom = cardContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
+        stretchCardToFillBottom.isActive = true
 
         container.layoutIfNeeded()
 
@@ -170,6 +176,9 @@ final class PresentSmallCardTransitionDriver {
         }
 
         baseAnimator.addAnimations {
+            // Remove stretchCardToFillBottom constraints immediately.
+            stretchCardToFillBottom.isActive = false
+
             animateContainerBouncingUp()
             animateCardDetailViewSizing()
         }

@@ -23,6 +23,10 @@ class SecondViewController: UIViewController {
             StatementViewModel(month: "5月", price: "¥25,000", dueDate: "6月10日", status: .overdue),
             StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日"),
             StatementViewModel(month: "7月", price: "¥7,700", dueDate: "8月10日")
+        ],
+        [
+            CardContentViewModel(image: #imageLiteral(resourceName: "image1"), primary: "Paidyとは", secondary: ""),
+            CardContentViewModel(image: #imageLiteral(resourceName: "image2"), primary: "請求と支払いについて", secondary: "")
         ]
     ]
 
@@ -34,6 +38,7 @@ class SecondViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "\(StatementCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementCard")
         self.tableView.register(UINib(nibName: "\(StatementSmallCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementSmallCard")
+        self.tableView.register(UINib(nibName: "\(SmallCardCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "SmallCard")
     }
 }
 
@@ -54,6 +59,8 @@ extension SecondViewController: UITableViewDataSource {
             return tableView.dequeueReusableCell(withIdentifier: "StatementCard", for: indexPath)
         case 1:
             return tableView.dequeueReusableCell(withIdentifier: "StatementSmallCard", for: indexPath)
+        case 2:
+            return tableView.dequeueReusableCell(withIdentifier: "SmallCard", for: indexPath)
         default:
             return UITableViewCell()
         }
@@ -61,15 +68,15 @@ extension SecondViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: .init(x: 0, y: 0, width: tableView.bounds.width, height: 50))
-        let label = UILabel(frame: .init(x: 32, y: 0, width: 100, height: 50))
+        let label = UILabel(frame: .init(x: 32, y: 0, width: 100, height: 40))
         let font: UIFont
         if section == 0 {
-            font = UIFont.systemFont(ofSize: 30, weight: .bold)
+            font = UIFont.systemFont(ofSize: 28, weight: .bold)
         } else {
-            font = UIFont.systemFont(ofSize: 24, weight: .bold)
+            font = UIFont.systemFont(ofSize: 20, weight: .bold)
         }
         label.font = font
-        label.text = "Label \(section + 1)"
+        label.text = "Title \(section + 1)"
         header.addSubview(label)
         return header
     }
@@ -77,8 +84,7 @@ extension SecondViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return 50.0
-        case 1: return 40.0
-        default: return .zero
+        default: return 40.0
         }
     }
 }
@@ -88,8 +94,7 @@ extension SecondViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0: return 280
-        case 1: return 176
-        default: return 0
+        default: return 176
         }
     }
 

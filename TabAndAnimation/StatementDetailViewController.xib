@@ -42,8 +42,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jes-EE-ae4">
-                    <rect key="frame" x="343" y="94" width="39" height="30"/>
-                    <state key="normal" title="Close"/>
+                    <rect key="frame" x="32" y="94" width="42" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Close">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                     <connections>
                         <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="hfO-ZL-Oar"/>
                     </connections>
@@ -51,6 +54,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="jes-EE-ae4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="32" id="55k-Hx-kHQ"/>
                 <constraint firstItem="xw8-cZ-1fi" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Cli-rV-X85"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Oxj-lh-PMd" secondAttribute="trailing" id="FC1-XO-suM"/>
                 <constraint firstItem="jes-EE-ae4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="Oo9-UC-hPU"/>
@@ -58,7 +62,6 @@
                 <constraint firstItem="Oxj-lh-PMd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SxD-Yq-aYS"/>
                 <constraint firstItem="jpf-ZY-xT2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WQr-7A-7mw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xw8-cZ-1fi" secondAttribute="bottom" id="Zeg-E3-SXT"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jes-EE-ae4" secondAttribute="trailing" constant="32" id="scC-Ro-SPj"/>
                 <constraint firstItem="Oxj-lh-PMd" firstAttribute="top" secondItem="jpf-ZY-xT2" secondAttribute="bottom" id="vLH-Ex-0N0"/>
                 <constraint firstItem="xw8-cZ-1fi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="viw-Cp-tiu"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jpf-ZY-xT2" secondAttribute="trailing" id="xb4-C8-eyn"/>
