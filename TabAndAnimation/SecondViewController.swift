@@ -19,13 +19,13 @@ class SecondViewController: StatusBarAnimatableViewController {
     private var viewModels = [
         [
             StatementViewModel(month: "5月", price: "¥25,000", dueDate: "6月10日", status: .overdue),
-            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日")
+            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日", status: .created)
         ],
         [
             StatementViewModel(month: "3月", price: "¥3,400", dueDate: "4月10日", status: .paid),
             StatementViewModel(month: "4月", price: "¥120,000", dueDate: "5月10日", status: .paid),
             StatementViewModel(month: "5月", price: "¥25,000", dueDate: "6月10日", status: .overdue),
-            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日"),
+            StatementViewModel(month: "6月", price: "¥12,300", dueDate: "7月10日", status: .created),
             StatementViewModel(month: "7月", price: "¥7,700", dueDate: "8月10日")
         ],
         [

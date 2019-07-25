@@ -9,7 +9,7 @@
 import UIKit
 
 enum Status {
-    case created, paid, overdue
+    case created, paid, overdue, other
 }
 
 class StatementViewModel: ViewModel {
@@ -18,7 +18,7 @@ class StatementViewModel: ViewModel {
     let dueDate: String
     let status: Status
 
-    init(month: String, price: String, dueDate: String, status: Status = .created) {
+    init(month: String, price: String, dueDate: String, status: Status = .other) {
         self.month = month
         self.price = price
         self.dueDate = dueDate
@@ -52,6 +52,12 @@ class StatementContentView: UIView, NibLoadable {
             self.monthLabel.text = viewModel?.month
             self.priceLabel.text = viewModel?.price
             self.dueDateLabel.text = "支払い期日: \(viewModel?.dueDate ?? "")"
+
+            // Hide pay button
+            if ![.created, .overdue].contains(self.viewModel?.status) {
+                self.payButton.isHidden = true
+                self.payButtonToDueDateLabel.constant = 0
+            }
         }
     }
 
