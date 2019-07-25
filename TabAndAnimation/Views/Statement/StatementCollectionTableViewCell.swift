@@ -59,16 +59,24 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
-        let statement = cell.statementContentView
-        statement?.viewModel = self._viewModels?[indexPath.row]
+        let statementView = cell.statementContentView!
+        let viewModel = self._viewModels?[indexPath.row]
+        statementView.viewModel = viewModel
 
         // Hide icon
-        statement?.iconImageView.isHidden = true
-        statement?.iconHeight.constant = 0
+        statementView.iconImageView.isHidden = true
+        statementView.iconHeight.constant = 0
 
-        // Shrink the needless spaces
-        statement?.monthLabelToIcon.constant = 0
-        statement?.priceLabelToMessageLabel.constant = 0
+        if viewModel?.status == .overdue {
+            statementView.messageLabel.isHidden = false
+            statementView.payButton.backgroundColor = .red
+            let messageHeight: CGFloat = statementView.messageLabel.bounds.height
+            statementView.iconToTop.constant -= messageHeight
+        } else {
+            // Shrink the needless spaces
+            statementView.monthLabelToIcon.constant = 0
+            statementView.priceLabelToMessageLabel.constant = 0
+        }
 
         return cell
     }

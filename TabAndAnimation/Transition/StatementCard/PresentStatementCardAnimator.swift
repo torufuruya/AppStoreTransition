@@ -118,21 +118,35 @@ final class PresentStatementCardTransitionDriver {
         detailView.layer.cornerRadius = 16.0
 
         // -------------------------------
+        // Statement content view preparation
+        // -------------------------------
+        let statement = screens.detail.viewModel!
+        let statementContentView = screens.detail.statementContentView!
+        // Hide icon
+        statementContentView.iconImageView.isHidden = true
+        statementContentView.iconHeight.constant = 0
+
+        if statement.status == .overdue {
+            // Display overdue information
+            statementContentView.messageLabel.isHidden = false
+            statementContentView.payButton.backgroundColor = .red
+            let messageHeight: CGFloat = statementContentView.messageLabel.bounds.height
+            statementContentView.iconToTop.constant -= messageHeight
+        } else {
+            // Shrink the needless spaces
+            statementContentView.monthLabelToIcon.constant = 0
+            statementContentView.priceLabelToMessageLabel.constant = 0
+        }
+
+        // -------------------------------
         // Final preparation
         // -------------------------------
         params.fromCell.isHidden = true
         params.fromCell.resetTransform()
 
+        // Temporarily hide the upper area of presented view (restore it in animation)
         let topTemporaryFix = screens.detail.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 0)
         topTemporaryFix.isActive = true
-
-        // Hide icon
-        let statementContentView = screens.detail.statementContentView!
-        statementContentView.iconImageView.isHidden = true
-        statementContentView.iconHeight.constant = 0
-        // Shrink the needless spaces
-        statementContentView.monthLabelToIcon.constant = 0
-        statementContentView.priceLabelToMessageLabel.constant = 0
 
         container.layoutIfNeeded()
 

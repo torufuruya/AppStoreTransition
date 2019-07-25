@@ -72,26 +72,48 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
         ])
 
         // -------------------------------
-        // Final preparation
+        // Statement content view preparation
         // -------------------------------
-        self.params.fromCell.resetTransform()
-        self.params.fromCell.isHidden = true
         let presentedViewController = ctx.viewController(forKey: .to)! as! StatementDetailViewController
+        let statement = presentedViewController.viewModel!
         let statementContentView = presentedViewController.statementContentView!
 
-        // Temporarily hide the upper area of presented view (restore it in animation)
-        let temporaryPresentedViewTopConstraint = statementContentView.topAnchor.constraint(equalTo: presentedView.topAnchor, constant: 0)
-        temporaryPresentedViewTopConstraint.isActive = true
+        if statement.status == .overdue {
+            // Display overdue information
+            statementContentView.backgroundColor = .red
+            statementContentView.iconImageView.image = #imageLiteral(resourceName: "ic_overdue")
+            statementContentView.iconImageView.tintColor = .white
+            statementContentView.monthLabel.textColor = .white
+            statementContentView.priceLabel.textColor = .white
+            statementContentView.payButton.backgroundColor = .red
+        }
 
         // Hide message
+        statementContentView.messageLabel.isHidden = false
         statementContentView.messageLabel.alpha = 0.0
         statementContentView.messageLabelToMonthLabel.constant = 0
         statementContentView.priceLabelToMessageLabel.constant = 0
 
+        // Make month font weight regular unless overdue
+        if statement.status != .overdue {
+            statementContentView.makeMonthFontRegular()
+        }
+
+        // Shrink price label (larger in detail screen)
         statementContentView.shrinkPriceLabel()
 
         // Hide dismiss button
         presentedViewController.dismissButton.alpha = 0.0
+
+        // -------------------------------
+        // Final preparation
+        // -------------------------------
+        self.params.fromCell.resetTransform()
+        self.params.fromCell.isHidden = true
+
+        // Temporarily hide the upper area of presented view (restore it in animation)
+        let temporaryPresentedViewTopConstraint = statementContentView.topAnchor.constraint(equalTo: presentedView.topAnchor, constant: 0)
+        temporaryPresentedViewTopConstraint.isActive = true
 
         // Stretch statement content view to fill the small card.
         let stretchCardToFillBottom = presentedViewController.statementContentView.bottomAnchor.constraint(equalTo: presentedView.bottomAnchor)
@@ -132,11 +154,18 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
                 // Hide month
                 statementContentView.monthLabel.alpha = 0.0
 
-                // Show message
-                statementContentView.messageLabel.alpha = 1.0
-                statementContentView.messageLabelToMonthLabel.constant = 8
-                statementContentView.priceLabelToMessageLabel.constant = 8
+                if statement.status == .overdue {
+                    // Show message
+                    statementContentView.messageLabel.alpha = 1.0
+                    statementContentView.messageLabelToMonthLabel.constant = 8
+                    statementContentView.priceLabelToMessageLabel.constant = 8
+                    // Restore the text color of price.
+                    statementContentView.priceLabel.textColor = .black
+                    // Update background color red -> white.
+                    statementContentView.backgroundColor = .white
+                }
 
+                // Restore the size of price label
                 statementContentView.priceLabel.transform = .identity
 
                 // Show dismiss button

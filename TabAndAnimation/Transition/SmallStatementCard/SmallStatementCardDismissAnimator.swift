@@ -74,9 +74,6 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
         let temporaryPresentedViewTopConstraint = presentedViewController.statementContentView.topAnchor.constraint(equalTo: presentedView.topAnchor, constant: presentedViewController.headerImageView.bounds.height)
         temporaryPresentedViewTopConstraint.isActive = true
 
-        // Fix the weight of the month label.
-        presentedViewController.statementContentView.makeMonthFontRegular()
-
         let stretchCardToFillBottom = presentedViewController.statementContentView.bottomAnchor.constraint(equalTo: presentedView.bottomAnchor)
 
         container.layoutIfNeeded()
@@ -107,14 +104,20 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
             do {
                 presentedViewController.dismissButton.alpha = 0.0
                 presentedViewController.statementContentView.dueDateLabel.alpha = 0.0
+
+                let statement = presentedViewController.viewModel!
                 let statementView = presentedViewController.statementContentView!
+                if statement.status == .overdue {
+                    statementView.backgroundColor = .red
+                    statementView.priceLabel.textColor = .white
+                }
                 statementView.iconImageView.alpha = 1.0
                 statementView.monthLabel.alpha = 1.0
                 statementView.messageLabelToMonthLabel.constant = 0
                 statementView.priceLabelToMessageLabel.constant = 0
+
                 // Restore the sizes of UI conponents
                 statementView.shrinkPriceLabel()
-                statementView.priceLabel.invalidateIntrinsicContentSize()
                 container.layoutIfNeeded()
             }
         }, completion: { finished in

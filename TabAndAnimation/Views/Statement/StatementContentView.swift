@@ -8,15 +8,21 @@
 
 import UIKit
 
+enum Status {
+    case created, paid, overdue
+}
+
 class StatementViewModel: ViewModel {
     let month: String
     let price: String
     let dueDate: String
+    let status: Status
 
-    init(month: String, price: String, dueDate: String) {
+    init(month: String, price: String, dueDate: String, status: Status = .created) {
         self.month = month
         self.price = price
         self.dueDate = dueDate
+        self.status = status
     }
 }
 
@@ -78,7 +84,7 @@ class StatementContentView: UIView, NibLoadable {
     }
 
     func makeMonthFontRegular() {
-        self.monthLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        self.monthLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
     }
 
     func shrinkPriceLabel() {

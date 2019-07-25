@@ -61,22 +61,42 @@ extension StatementSmallCollectionTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
-        let statement = cell.statementContentView
-        statement?.viewModel = self._viewModels?[indexPath.row]
+        let statementView = cell.statementContentView!
+        let viewModel = self._viewModels?[indexPath.row]
+        statementView.viewModel = viewModel
+
+        // Apply overdue appearance
+        if viewModel?.status == .overdue {
+            statementView.backgroundColor = .red
+            statementView.iconImageView.image = #imageLiteral(resourceName: "ic_overdue")
+            statementView.iconImageView.tintColor = .white
+            statementView.monthLabel.textColor = .white
+            statementView.priceLabel.textColor = .white
+            statementView.payButton.backgroundColor = .red
+        } else {
+            statementView.backgroundColor = .white
+            statementView.iconImageView.image = #imageLiteral(resourceName: "ic_bill")
+            statementView.iconImageView.tintColor = .black
+            statementView.monthLabel.textColor = .black
+            statementView.priceLabel.textColor = .black
+            statementView.payButton.backgroundColor = .blue
+        }
 
         // Hide message
-        statement?.messageLabel.isHidden = true
-        statement?.messageLabelToMonthLabel.constant = 0
-        statement?.priceLabelToMessageLabel.constant = 0
+        statementView.messageLabel.isHidden = true
+        statementView.messageLabelToMonthLabel.constant = 0
+        statementView.priceLabelToMessageLabel.constant = 0
 
-        // Make month font weight regular (bold in detail screen)
-        statement?.makeMonthFontRegular()
+        // Make month font weight regular unless overdue
+        if viewModel?.status != .overdue {
+            statementView.makeMonthFontRegular()
+        }
 
         // Shrink price label (larger in detail screen)
-        statement?.shrinkPriceLabel()
+        statementView.shrinkPriceLabel()
 
         // Hide dueDate label
-        statement?.dueDateLabel.isHidden = true
+        statementView.dueDateLabel.isHidden = true
 
         // NOTE: Don't hide payButton explicitly, but it's supposed
         // to be hidden by cell's clipToBounds=true.
