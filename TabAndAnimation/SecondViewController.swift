@@ -8,9 +8,13 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class SecondViewController: StatusBarAnimatableViewController {
 
     @IBOutlet weak var tableView: UITableView!
+
+    override var statusBarAnimatableConfig: StatusBarAnimatableConfig {
+        return .init(prefersHidden: false, animation: .slide)
+    }
 
     private var viewModels = [
         [

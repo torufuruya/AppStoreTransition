@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD32F72A22E983B200C04B63 /* StatusBarAnimatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD32F72922E983B200C04B63 /* StatusBarAnimatableViewController.swift */; };
 		FD41942022DFFA5200D9DE06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD41941F22DFFA5200D9DE06 /* AppDelegate.swift */; };
 		FD41942222DFFA5200D9DE06 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD41942122DFFA5200D9DE06 /* FirstViewController.swift */; };
 		FD41942422DFFA5200D9DE06 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD41942322DFFA5200D9DE06 /* SecondViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD32F72922E983B200C04B63 /* StatusBarAnimatableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAnimatableViewController.swift; sourceTree = "<group>"; };
 		FD41941C22DFFA5200D9DE06 /* TabAndAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabAndAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD41941F22DFFA5200D9DE06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD41942122DFFA5200D9DE06 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				FDE597E922E0701300C8AC0B /* Transition */,
 				FDE597DC22E01A7C00C8AC0B /* Views */,
 				FD41941F22DFFA5200D9DE06 /* AppDelegate.swift */,
+				FD32F72922E983B200C04B63 /* StatusBarAnimatableViewController.swift */,
 				FD41942122DFFA5200D9DE06 /* FirstViewController.swift */,
 				FD41942322DFFA5200D9DE06 /* SecondViewController.swift */,
 				FD41942522DFFA5200D9DE06 /* Main.storyboard */,
@@ -323,6 +326,7 @@
 				FDE7A9D822E6D2B3005CA7A5 /* DismissStatementCardAnimator.swift in Sources */,
 				FDE7A9D622E6D2B3005CA7A5 /* PresentStatementCardAnimator.swift in Sources */,
 				FD41942022DFFA5200D9DE06 /* AppDelegate.swift in Sources */,
+				FD32F72A22E983B200C04B63 /* StatusBarAnimatableViewController.swift in Sources */,
 				FD5E045E22E7FB61007FE498 /* SmallStatementCardDismissAnimator.swift in Sources */,
 				FD8C7B3A22E1AACD00D307F6 /* SmallCardTransition.swift in Sources */,
 				FDE597DE22E01AB900C8AC0B /* CardContentView.swift in Sources */,

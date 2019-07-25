@@ -8,12 +8,16 @@
 
 import UIKit
 
-class StatementDetailViewController: UIViewController {
+class StatementDetailViewController: StatusBarAnimatableViewController {
 
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var statementContentView: StatementContentView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dismissButton: UIButton!
+
+    override var statusBarAnimatableConfig: StatusBarAnimatableConfig {
+        return .init(prefersHidden: true, animation: .slide)
+    }
 
     var viewModel: StatementViewModel? {
         didSet {
