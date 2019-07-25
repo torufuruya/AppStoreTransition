@@ -16,50 +16,20 @@ final class PresentStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         let fromCell: StatementCardCollectionViewCell
     }
 
-    private let presentAnimationDuration: TimeInterval
-    private let springAnimator: UIViewPropertyAnimator
-    private var transitionDriver: PresentStatementCardTransitionDriver?
+    private var duration: TimeInterval = 0
+    private var damping: CGFloat = 0
 
     init(params: Params) {
         self.params = params
-        self.springAnimator = PresentStatementCardAnimator.createBaseSpringAnimator(params: params)
-        self.presentAnimationDuration = springAnimator.duration
         super.init()
+        self.createBaseSpringAnimator(params: params)
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return self.presentAnimationDuration
+        return self.duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        self.transitionDriver = PresentStatementCardTransitionDriver(
-            params: params,
-            transitionContext: transitionContext,
-            baseAnimator: springAnimator)
-        self.transitionDriver?.animator.startAnimation()
-    }
-
-    private static func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) -> UIViewPropertyAnimator {
-        // Damping between 0.7 (far away) and 1.0 (nearer)
-        let cardPositionY = params.fromCardFrame.minY
-        let distanceToBounce = abs(params.fromCardFrame.minY)
-        let extentToBounce = cardPositionY < 0 ? params.fromCardFrame.height : UIScreen.main.bounds.height
-        let dampFactorInterval: CGFloat = 0.3
-        let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
-
-        // Duration between 0.5 (nearer) and 0.9 (far away)
-        let baselineDuration: TimeInterval = 0.5
-        let maxDuration: TimeInterval = 0.9
-        let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
-
-        let springTiming = UISpringTimingParameters(dampingRatio: damping, initialVelocity: .init(dx: 0, dy: 0))
-        return UIViewPropertyAnimator(duration: duration, timingParameters: springTiming)
-    }
-}
-
-final class PresentStatementCardTransitionDriver {
-    let animator: UIViewPropertyAnimator
-    init(params: PresentStatementCardAnimator.Params, transitionContext: UIViewControllerContextTransitioning, baseAnimator: UIViewPropertyAnimator) {
         let ctx = transitionContext
         let container = ctx.containerView
         let screens: (home: UITabBarController, detail: StatementDetailViewController) = (
@@ -82,7 +52,7 @@ final class PresentStatementCardTransitionDriver {
             animatedContainerView.widthAnchor.constraint(equalToConstant: container.bounds.width),
             animatedContainerView.heightAnchor.constraint(equalToConstant: container.bounds.height),
             animatedContainerView.centerXAnchor.constraint(equalTo: container.centerXAnchor)
-        ])
+            ])
 
         let animatedContainerVerticalConstraint: NSLayoutConstraint = {
             return animatedContainerView.topAnchor.constraint(equalTo: container.topAnchor, constant: fromCardFrame.minY)
@@ -105,7 +75,7 @@ final class PresentStatementCardTransitionDriver {
             }()
             let cardConstraints = [
                 verticalAnchor,
-//                detailView.centerXAnchor.constraint(equalTo: animatedContainerView.centerXAnchor),
+                //                detailView.centerXAnchor.constraint(equalTo: animatedContainerView.centerXAnchor),
             ]
             NSLayoutConstraint.activate(cardConstraints)
         }
@@ -189,21 +159,50 @@ final class PresentStatementCardTransitionDriver {
 
             // No longer need the bottom constraint that pins bottom of card content to its root.
             //            screens.cardDetail.cardBottomToRootBottomConstraint.isActive = false
-//            screens.detail.scrollView.isScrollEnabled = true
+            //            screens.detail.scrollView.isScrollEnabled = true
 
             let success = !ctx.transitionWasCancelled
             ctx.completeTransition(success)
         }
 
-        baseAnimator.addAnimations {
-            animateContainerBouncingUp()
-            animateCardDetailViewSizing()
-        }
+        // -------------------------------
+        // Execute animation
+        // -------------------------------
+        UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.damping, initialSpringVelocity: 0.0, options: [], animations: {
+            do {
+                animatedContainerVerticalConstraint.constant = 0
+                container.layoutIfNeeded()
+            }
+            do {
+                detailViewWidthConstraint.constant = animatedContainerView.bounds.width
+                detailViewHeightConstraint.constant = animatedContainerView.bounds.height
+                detailViewLeadingConstraint.constant = 0
+                detailView.layer.cornerRadius = 0
+                detailView.clipsToBounds = true
+                screens.detail.statementContentView.monthLabel.alpha = 0.0
+                // Expand the aount of height of the upper area
+                topTemporaryFix.constant = 100
 
-        baseAnimator.addCompletion { _ in
+                container.layoutIfNeeded()
+            }
+        }, completion: { finished in
             completeEverything()
-        }
+        })
+    }
 
-        self.animator = baseAnimator
+    private func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) {
+        // Damping between 0.5 (far away) and 1.0 (nearer)
+        let cardPositionY = params.fromCardFrame.minY
+        let distanceToBounce = abs(params.fromCardFrame.minY)
+        let extentToBounce = cardPositionY < 0 ? params.fromCardFrame.height : UIScreen.main.bounds.height
+        let dampFactorInterval: CGFloat = 0.5
+        let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
+        self.damping = damping
+
+        // Duration between 0.4 (nearer) and 0.9 (far away)
+        let baselineDuration: TimeInterval = 0.4
+        let maxDuration: TimeInterval = 0.9
+        let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
+        self.duration = duration
     }
 }

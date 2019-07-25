@@ -24,8 +24,8 @@ final class SmallStatementCardTransition: NSObject, UIViewControllerTransitionin
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SmallStatementCardPresentAnimator(params: SmallStatementCardPresentAnimator.Params(
-            fromFrame: self.params.fromCardFrame,
+        return SmallStatementCardPresentAnimator(params: PresentStatementCardAnimator.Params(
+            fromCardFrame: self.params.fromCardFrame,
             fromCell: self.params.fromCell))
     }
 

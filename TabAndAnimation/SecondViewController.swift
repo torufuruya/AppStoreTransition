@@ -34,6 +34,7 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
 
         self.tableView.delaysContentTouches = false
+        self.tableView.contentInset = .init(top: 200, left: 0, bottom: 0, right: 0)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "\(StatementCollectionTableViewCell.self)", bundle: nil), forCellReuseIdentifier: "StatementCard")

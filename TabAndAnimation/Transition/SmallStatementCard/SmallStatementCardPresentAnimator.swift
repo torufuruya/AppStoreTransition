@@ -10,26 +10,25 @@ import UIKit
 
 final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    struct Params {
-        let fromFrame: CGRect
-        let fromCell: StatementCardCollectionViewCell
-    }
+    let params: PresentStatementCardAnimator.Params
 
-    let params: Params
+    private var duration: TimeInterval = 0
+    private var damping: CGFloat = 0
 
-    init(params: Params) {
+    init(params: PresentStatementCardAnimator.Params) {
         self.params = params
         super.init()
+        self.createBaseSpringAnimator(params: params)
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.7
+        return self.duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let ctx = transitionContext
         let container = ctx.containerView
-        let fromFrame = self.params.fromFrame
+        let fromFrame = self.params.fromCardFrame
 
         // -------------------------------
         // Temporary container preparation
@@ -124,7 +123,7 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
         // -------------------------------
         // Execute animation
         // -------------------------------
-        UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
+        UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.damping, initialSpringVelocity: 0.0, options: [], animations: {
             // Remove stretchCardToFillBottom constraints immediately.
             stretchCardToFillBottom.isActive = false
 
@@ -182,5 +181,21 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
             presentedView.edges(to: container, top: -1)
             ctx.completeTransition(finished)
         })
+    }
+
+    private func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) {
+        // Damping between 0.5 (far away) and 1.0 (nearer)
+        let cardPositionY = params.fromCardFrame.minY
+        let distanceToBounce = abs(params.fromCardFrame.minY)
+        let extentToBounce = cardPositionY < 0 ? params.fromCardFrame.height : UIScreen.main.bounds.height
+        let dampFactorInterval: CGFloat = 0.5
+        let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
+        self.damping = damping
+
+        // Duration between 0.4 (nearer) and 0.9 (far away)
+        let baselineDuration: TimeInterval = 0.4
+        let maxDuration: TimeInterval = 0.9
+        let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
+        self.duration = duration
     }
 }
