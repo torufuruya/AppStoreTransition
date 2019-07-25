@@ -61,8 +61,6 @@ extension StatementCollectionTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StatementCardCollectionViewCell
         let statement = cell.statementContentView
         statement?.viewModel = self._viewModels?[indexPath.row]
-        statement?.monthLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        statement?.priceLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
 
         // Hide icon
         statement?.iconImageView.isHidden = true

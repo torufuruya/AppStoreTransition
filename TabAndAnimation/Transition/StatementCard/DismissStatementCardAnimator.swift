@@ -100,7 +100,7 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             screens.detail.dismissButton.alpha = 0.0
             screens.detail.statementContentView.monthLabel.alpha = 1.0
             // Restore the sizes of UI conponents
-            screens.detail.statementContentView.transformPriceLabel(toPointSize: params.fromCell.statementContentView.priceLabel.font.pointSize)
+            screens.detail.statementContentView.priceLabel.transform = .identity
             // Shrink the aount of height of the upper area
             topTemporaryFix.constant = 0.0
 

@@ -39,6 +39,7 @@ class StatementContentView: UIView, NibLoadable {
     @IBOutlet weak var payButtonToDueDateLabel: NSLayoutConstraint!
 
     private let priceLabelFontSize: CGFloat = 28
+    private let priceLabelSmallFontSize: CGFloat = 16
 
     var viewModel: StatementViewModel? {
         didSet {
@@ -76,8 +77,12 @@ class StatementContentView: UIView, NibLoadable {
         self.payButton.layer.cornerRadius = self.payButton.bounds.height/2
     }
 
-    func transformPriceLabel(toPointSize: CGFloat) {
-        let factor: CGFloat = toPointSize / self.priceLabelFontSize
+    func makeMonthFontRegular() {
+        self.monthLabel.font = UIFont.boldSystemFont(ofSize: 16)
+    }
+
+    func shrinkPriceLabel() {
+        let factor: CGFloat = self.priceLabelSmallFontSize / self.priceLabelFontSize
         let transform = CGAffineTransform(scaleX: factor, y: factor)
         self.priceLabel.transform = transform
     }

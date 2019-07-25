@@ -88,7 +88,7 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
         statementContentView.messageLabelToMonthLabel.constant = 0
         statementContentView.priceLabelToMessageLabel.constant = 0
 
-        statementContentView.transformPriceLabel(toPointSize: self.params.fromCell.statementContentView.priceLabel.font.pointSize)
+        statementContentView.shrinkPriceLabel()
 
         // Hide dismiss button
         presentedViewController.dismissButton.alpha = 0.0

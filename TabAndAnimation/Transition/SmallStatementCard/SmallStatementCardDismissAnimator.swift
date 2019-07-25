@@ -75,7 +75,7 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
         temporaryPresentedViewTopConstraint.isActive = true
 
         // Fix the weight of the month label.
-        presentedViewController.statementContentView.monthLabel.font = .systemFont(ofSize: 16, weight: .regular)
+        presentedViewController.statementContentView.makeMonthFontRegular()
 
         let stretchCardToFillBottom = presentedViewController.statementContentView.bottomAnchor.constraint(equalTo: presentedView.bottomAnchor)
 
@@ -106,14 +106,15 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
             // For example, show pay button if the content is payable.
             do {
                 presentedViewController.dismissButton.alpha = 0.0
+                presentedViewController.statementContentView.dueDateLabel.alpha = 0.0
                 let statementView = presentedViewController.statementContentView!
                 statementView.iconImageView.alpha = 1.0
                 statementView.monthLabel.alpha = 1.0
                 statementView.messageLabelToMonthLabel.constant = 0
-                // FIXME: Something wrong... it won't change.
                 statementView.priceLabelToMessageLabel.constant = 0
                 // Restore the sizes of UI conponents
-                statementView.transformPriceLabel(toPointSize: self.params.fromCell.statementContentView.priceLabel.font.pointSize)
+                statementView.shrinkPriceLabel()
+                statementView.priceLabel.invalidateIntrinsicContentSize()
                 container.layoutIfNeeded()
             }
         }, completion: { finished in

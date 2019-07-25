@@ -69,15 +69,17 @@ extension StatementSmallCollectionTableViewCell: UICollectionViewDataSource {
         statement?.messageLabelToMonthLabel.constant = 0
         statement?.priceLabelToMessageLabel.constant = 0
 
+        // Make month font weight regular (bold in detail screen)
+        statement?.makeMonthFontRegular()
+
+        // Shrink price label (larger in detail screen)
+        statement?.shrinkPriceLabel()
+
         // Hide dueDate label
         statement?.dueDateLabel.isHidden = true
 
-        // Fix font
-        statement?.monthLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        statement?.priceLabel.font = .systemFont(ofSize: 16, weight: .bold)
-
-        // NOTE: Don't hide dueDateLabel and payButton explicitly.
-        // They are supposed to be hidden by cell's clipToBounds=true.
+        // NOTE: Don't hide payButton explicitly, but it's supposed
+        // to be hidden by cell's clipToBounds=true.
         // It enables us to show them in the detail view w/o doing anything.
 
         return cell
