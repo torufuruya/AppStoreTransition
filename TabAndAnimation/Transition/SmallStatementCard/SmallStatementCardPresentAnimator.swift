@@ -93,12 +93,19 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
         // Hide dismiss button
         presentedViewController.dismissButton.alpha = 0.0
 
+        // Stretch statement content view to fill the small card.
+        let stretchCardToFillBottom = presentedViewController.statementContentView.bottomAnchor.constraint(equalTo: presentedView.bottomAnchor)
+        stretchCardToFillBottom.isActive = true
+
         container.layoutIfNeeded()
 
         // -------------------------------
         // Execute animation
         // -------------------------------
         UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
+            // Remove stretchCardToFillBottom constraints immediately.
+            stretchCardToFillBottom.isActive = false
+
             // Bounce up animated container.
             do {
                 animatedContainerVerticalConstraint.constant = 0
