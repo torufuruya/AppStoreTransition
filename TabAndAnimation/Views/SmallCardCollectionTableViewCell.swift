@@ -98,10 +98,17 @@ extension SmallCardCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
             return cell.superview!.convert(r, to: nil)
         }()
 
+        // Calculate height for animation container which does not include tab bar height
+        // otherwise UI component can be displayed over tab bar during animation.
+        let tabBarHeight: CGFloat = self.viewController?.tabBarController?.tabBar.frame.height ?? 0
+        var containerFrame = self.viewController?.view.bounds ?? .zero
+        containerFrame.size.height = max(0, containerFrame.height - tabBarHeight)
+
         let params = SmallCardTransition.Params(
             fromCardFrame: cardPresentationFrameOnScreen,
             fromCardFrameWithoutTransform: cardFrameWithoutTransform,
-            fromCell: cell)
+            fromCell: cell,
+            containerFrame: containerFrame)
         self.transition = SmallCardTransition(params: params)
         detail.transitioningDelegate = self.transition
 

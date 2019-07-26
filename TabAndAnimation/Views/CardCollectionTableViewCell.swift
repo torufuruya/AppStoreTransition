@@ -114,7 +114,7 @@ extension CardCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
         let params = SmallCardTransition.Params(
             fromCardFrame: cardPresentationFrameOnScreen,
             fromCardFrameWithoutTransform: cardFrameWithoutTransform,
-            fromCell: cell)
+            fromCell: cell, containerFrame: .zero)
         self.transition = SmallCardTransition(params: params)
         detail.transitioningDelegate = self.transition
 

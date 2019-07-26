@@ -14,6 +14,7 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
         let fromCardFrame: CGRect
         let fromCardFrameWithoutTransform: CGRect
         let fromCell: CardCollectionViewCell
+        let containerFrame: CGRect
     }
 
     struct Constants {
@@ -84,6 +85,27 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
 
         // Force card filling bottom
         let stretchCardToFillBottom = screens.detail.cardContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
+
+        // Fit container view frame to which is not including UITabBar
+        // not to display UI over the tab bar.
+        container.translatesAutoresizingMaskIntoConstraints = false
+        // Delete bottom anchor to UITransitionView to edit container height.
+        for constraint in container.constraints {
+            if constraint.firstAttribute == .bottom || constraint.secondAttribute == .bottom {
+                constraint.isActive = false
+            }
+        }
+        // Edit container width/height by setting new constraints.
+        let containerFrame = self.params.containerFrame
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: containerFrame.width),
+            container.heightAnchor.constraint(equalToConstant: containerFrame.height)
+        ])
+        container.clipsToBounds = true
+        //<--- For debug
+        container.layer.borderWidth = 4
+        container.layer.borderColor = UIColor.green.cgColor
+        //--->
 
         func animateCardViewBackToPlace() {
             stretchCardToFillBottom.isActive = true
