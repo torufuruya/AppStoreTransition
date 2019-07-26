@@ -45,17 +45,10 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
         animatedContainerView.layer.shadowOffset = .init(width: 0, height: 4)
         animatedContainerView.layer.shadowRadius = 12
 
-        // -------------------------------
-        // Destination preparation
-        // -------------------------------
-        let presentedView = ctx.view(forKey: .from)!
-        presentedView.translatesAutoresizingMaskIntoConstraints = false
-        animatedContainerView.addSubview(presentedView)
-        presentedView.edges(to: animatedContainerView)
-
+        // Stick animatedContainer top/width/height/leading to container.
         let animatedContainerTopConstraint = animatedContainerView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0)
-        let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: presentedView.frame.width)
-        let animatedContainerHeightConstraint = animatedContainerView.heightAnchor.constraint(equalToConstant: presentedView.frame.height)
+        let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: container.frame.width)
+        let animatedContainerHeightConstraint = animatedContainerView.heightAnchor.constraint(equalToConstant: container.frame.height)
         let animatedContainerLeadingConstraint = animatedContainerView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 0)
 
         NSLayoutConstraint.activate([
@@ -64,6 +57,15 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
             animatedContainerHeightConstraint,
             animatedContainerLeadingConstraint
         ])
+
+        // -------------------------------
+        // Destination preparation
+        // -------------------------------
+        let presentedView = ctx.view(forKey: .from)!
+        presentedView.translatesAutoresizingMaskIntoConstraints = false
+        animatedContainerView.addSubview(presentedView)
+        // Card fills inside animated container view
+        presentedView.edges(to: animatedContainerView)
 
         // -------------------------------
         // Final preparation
@@ -83,6 +85,9 @@ final class SmallStatementCardDismissAnimator: NSObject, UIViewControllerAnimate
         // -------------------------------
         UIView.animate(withDuration: transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
             stretchCardToFillBottom.isActive = true
+            // NOTE: This is needed for dismissing by screen edge pan gesture.
+            presentedView.transform = .identity
+
             // Update animated container size to back to the original place.
             do {
                 let fromCardFrameWoT = self.params.fromFrameWithoutTransform

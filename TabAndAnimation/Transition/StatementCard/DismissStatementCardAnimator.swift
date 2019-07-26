@@ -40,22 +40,13 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             ctx.viewController(forKey: .to)! as! UITabBarController
         )
 
-        let detailView = ctx.view(forKey: .from)!
-
+        container.removeConstraints(container.constraints)
         // -------------------------------
         // Temporary container view preparation
         // -------------------------------
         let animatedContainerView = UIView()
         animatedContainerView.translatesAutoresizingMaskIntoConstraints = false
-        detailView.translatesAutoresizingMaskIntoConstraints = false
-
-        container.removeConstraints(container.constraints)
-
         container.addSubview(animatedContainerView)
-        animatedContainerView.addSubview(detailView)
-
-        // Card fills inside animated container view
-        detailView.edges(to: animatedContainerView)
 
         // Drop the same shadow as fromCell
         animatedContainerView.layer.shadowColor = UIColor.black.cgColor
@@ -63,10 +54,10 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         animatedContainerView.layer.shadowOffset = .init(width: 0, height: 4)
         animatedContainerView.layer.shadowRadius = 12
 
-//        animatedContainerView.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+        // Stick animatedContainer top/width/height/leading to container.
         let animatedContainerTopConstraint = animatedContainerView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0)
-        let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: detailView.frame.width)
-        let animatedContainerHeightConstraint = animatedContainerView.heightAnchor.constraint(equalToConstant: detailView.frame.height)
+        let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: container.frame.width)
+        let animatedContainerHeightConstraint = animatedContainerView.heightAnchor.constraint(equalToConstant: container.frame.height)
         let animatedContainerLeadingConstraint = animatedContainerView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 0)
 
         NSLayoutConstraint.activate([
@@ -76,20 +67,37 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             animatedContainerLeadingConstraint
         ])
 
-        // Fix weird top inset
-        let topTemporaryFix = screens.detail.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 100)
-        topTemporaryFix.isActive = true
+        // -------------------------------
+        // Destination preparation
+        // -------------------------------
+        let detailView = ctx.view(forKey: .from)!
+        detailView.translatesAutoresizingMaskIntoConstraints = false
+        animatedContainerView.addSubview(detailView)
+        // Card fills inside animated container view
+        detailView.edges(to: animatedContainerView)
+
+        // -------------------------------
+        // Final preparation
+        // -------------------------------
+        let presentedViewController = ctx.viewController(forKey: .from)! as! StatementDetailViewController
+
+        // Temporarily show the upper area of presented view (restore it in animation)
+        let temporaryPresentedViewTopConstraint = presentedViewController.statementContentView.topAnchor.constraint(equalTo: detailView.topAnchor, constant: 100)
+        temporaryPresentedViewTopConstraint.isActive = true
+
+        // Force card filling bottom
+        let stretchCardToFillBottom = presentedViewController.statementContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
 
         container.layoutIfNeeded()
 
-        // Force card filling bottom
-        let stretchCardToFillBottom = screens.detail.statementContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
-
+        // -------------------------------
+        // Execute animation
+        // -------------------------------
         func animateCardViewBackToPlace() {
-//            stretchCardToFillBottom.isActive = true
-            // Back to identity
-            // NOTE: Animated container view in a way, helps us to not messing up `transform` with `AutoLayout` animation.
-//            detailView.transform = .identity
+            stretchCardToFillBottom.isActive = true
+            // NOTE: This is needed for dismissing by screen edge pan gesture.
+            detailView.transform = .identity
+
             animatedContainerTopConstraint.constant = self.params.fromCardFrameWithoutTransform.minY
             animatedContainerWidthConstraint.constant = self.params.fromCardFrameWithoutTransform.width
             animatedContainerHeightConstraint.constant = self.params.fromCardFrameWithoutTransform.height
@@ -102,7 +110,7 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
             // Restore the sizes of UI conponents
             screens.detail.statementContentView.priceLabel.transform = .identity
             // Shrink the aount of height of the upper area
-            topTemporaryFix.constant = 0.0
+            temporaryPresentedViewTopConstraint.constant = 0.0
 
             container.layoutIfNeeded()
         }
@@ -116,10 +124,10 @@ final class DismissStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
                 self.params.fromCell.isHidden = false
             } else {
                 // Remove temporary fixes if not success!
-                topTemporaryFix.isActive = false
+                temporaryPresentedViewTopConstraint.isActive = false
                 stretchCardToFillBottom.isActive = false
 
-                detailView.removeConstraint(topTemporaryFix)
+                detailView.removeConstraint(temporaryPresentedViewTopConstraint)
                 detailView.removeConstraint(stretchCardToFillBottom)
 
                 container.removeConstraints(container.constraints)
