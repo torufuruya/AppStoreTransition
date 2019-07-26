@@ -28,8 +28,8 @@ class StatementCardPresentationController: UIPresentationController {
         presentingViewController.beginAppearanceTransition(false, animated: false)
         presentedViewController.transitionCoordinator!.animate(alongsideTransition: { (ctx) in
             UIView.animate(withDuration: 0.5, animations: {
-                self.blurView.effect = UIBlurEffect(style: .light)
-                self.blurView.alpha = 1
+                self.blurView.effect = UIBlurEffect(style: .dark)
+                self.blurView.alpha = 0.8
             })
         })
     }
