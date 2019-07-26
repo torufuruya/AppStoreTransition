@@ -12,17 +12,18 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
 
     let params: PresentStatementCardAnimator.Params
 
-    private var duration: TimeInterval = 0
-    private var damping: CGFloat = 0
+    private let presentAnimationDuration: TimeInterval
+    private let springAnimator: UIViewPropertyAnimator
 
     init(params: PresentStatementCardAnimator.Params) {
         self.params = params
+        self.springAnimator = SmallStatementCardPresentAnimator.createBaseSpringAnimator(params: params)
+        self.presentAnimationDuration = self.springAnimator.duration
         super.init()
-        self.createBaseSpringAnimator(params: params)
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return self.duration
+        return self.presentAnimationDuration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -123,79 +124,93 @@ final class SmallStatementCardPresentAnimator: NSObject, UIViewControllerAnimate
         // -------------------------------
         // Execute animation
         // -------------------------------
-        UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.damping, initialSpringVelocity: 0.0, options: [], animations: {
-            // Remove stretchCardToFillBottom constraints immediately.
-            stretchCardToFillBottom.isActive = false
+        func animateContainerBouncingUp() {
+            animatedContainerVerticalConstraint.constant = 0
+            container.layoutIfNeeded()
+        }
 
-            // Bounce up animated container.
-            do {
-                animatedContainerVerticalConstraint.constant = 0
-                container.layoutIfNeeded()
+        func animateStatementAppearance() {
+            // Hide icon
+            statementContentView.iconImageView.alpha = 0.0
+            // Hide month
+            statementContentView.monthLabel.alpha = 0.0
+            // Restore the size of price label
+            statementContentView.priceLabel.transform = .identity
+            // Show dismiss button
+            presentedViewController.dismissButton.alpha = 1.0
+
+            if statement.status == .overdue {
+                // Show message
+                statementContentView.messageLabel.alpha = 1.0
+                statementContentView.messageLabelToMonthLabel.constant = 8
+                statementContentView.priceLabelToMessageLabel.constant = 8
+                // Restore the text color of price.
+                statementContentView.priceLabel.textColor = .black
+                // Update background color red -> white.
+                statementContentView.backgroundColor = .white
             }
-            // Update presented view size to fill up the container.
-            do {
-                presentedViewWidthConstraint.constant = animatedContainerView.bounds.width
-                presentedViewHeightConstraint.constant = animatedContainerView.bounds.height
-                presentedViewLeadingConstraint.constant = 0
+            container.layoutIfNeeded()
+        }
 
-                presentedView.layer.cornerRadius = 0
-                presentedView.clipsToBounds = true
-                // Expand the top area to restore the appearance.
-                // `presentedViewController.headerImageView.bounds.height` instead of 100 works in iPhone XR but not in iPhone XS ;(
-                temporaryPresentedViewTopConstraint.constant = 100
-                container.layoutIfNeeded()
-            }
-            // Update the appearance depends on the content.
-            // For example, show pay button if the content is payable.
-            do {
-                // Hide icon
-                statementContentView.iconImageView.alpha = 0.0
-                // Hide month
-                statementContentView.monthLabel.alpha = 0.0
+        func animateCardDetailViewSizing() {
+            presentedViewWidthConstraint.constant = animatedContainerView.bounds.width
+            presentedViewHeightConstraint.constant = animatedContainerView.bounds.height
+            presentedViewLeadingConstraint.constant = 0
 
-                if statement.status == .overdue {
-                    // Show message
-                    statementContentView.messageLabel.alpha = 1.0
-                    statementContentView.messageLabelToMonthLabel.constant = 8
-                    statementContentView.priceLabelToMessageLabel.constant = 8
-                    // Restore the text color of price.
-                    statementContentView.priceLabel.textColor = .black
-                    // Update background color red -> white.
-                    statementContentView.backgroundColor = .white
-                }
+            presentedView.layer.cornerRadius = 0
+            presentedView.clipsToBounds = true
+            // Expand the top area to restore the appearance.
+            // `presentedViewController.headerImageView.bounds.height` instead of 100 works in iPhone XR but not in iPhone XS ;(
+            temporaryPresentedViewTopConstraint.constant = 100
+            container.layoutIfNeeded()
+        }
 
-                // Restore the size of price label
-                statementContentView.priceLabel.transform = .identity
-
-                // Show dismiss button
-                presentedViewController.dismissButton.alpha = 1.0
-
-                container.layoutIfNeeded()
-            }
-        }, completion: { finished in
+        func completeEverything() {
             // Remove temporary container
             animatedContainerView.removeConstraints(animatedContainerView.constraints)
             animatedContainerView.removeFromSuperview()
             // Re-add the destination view to the top
             container.addSubview(presentedView)
             presentedView.edges(to: container, top: -1)
-            ctx.completeTransition(finished)
-        })
+            let success = !ctx.transitionWasCancelled
+            ctx.completeTransition(success)
+        }
+
+        self.springAnimator.addAnimations {
+            // Remove stretchCardToFillBottom constraints immediately.
+            stretchCardToFillBottom.isActive = false
+            // Bounce up animated container.
+            animateContainerBouncingUp()
+            // Update the appearance depends on the content.
+            // For example, show pay button if the content is payable.
+            animateStatementAppearance()
+
+            // Update presented view size to fill up the container.
+            let cardExpanding = UIViewPropertyAnimator(duration: self.springAnimator.duration * 0.7, curve: .linear) {
+                animateCardDetailViewSizing()
+            }
+            cardExpanding.startAnimation()
+        }
+        self.springAnimator.addCompletion { position in
+            completeEverything()
+        }
+        self.springAnimator.startAnimation()
     }
 
-    private func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) {
-        // Damping between 0.5 (far away) and 1.0 (nearer)
+    private static func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) -> UIViewPropertyAnimator {
+        // Damping between 0.7 (far away) and 1.0 (nearer)
         let cardPositionY = params.fromCardFrame.minY
         let distanceToBounce = abs(params.fromCardFrame.minY)
         let extentToBounce = cardPositionY < 0 ? params.fromCardFrame.height : UIScreen.main.bounds.height
-        let dampFactorInterval: CGFloat = 0.5
+        let dampFactorInterval: CGFloat = 0.3
         let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
-        self.damping = damping
 
-        // Duration between 0.4 (nearer) and 0.9 (far away)
-        let baselineDuration: TimeInterval = 0.4
+        // Duration between 0.5 (nearer) and 0.9 (far away)
+        let baselineDuration: TimeInterval = 0.5
         let maxDuration: TimeInterval = 0.9
         let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
-        self.duration = duration
+
+        let springTiming = UISpringTimingParameters(dampingRatio: damping, initialVelocity: .init(dx: 0, dy: 0))
+        return UIViewPropertyAnimator(duration: duration, timingParameters: springTiming)
     }
 }

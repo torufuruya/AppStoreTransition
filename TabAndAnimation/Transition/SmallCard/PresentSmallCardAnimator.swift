@@ -180,7 +180,11 @@ final class PresentSmallCardTransitionDriver {
             stretchCardToFillBottom.isActive = false
 
             animateContainerBouncingUp()
-            animateCardDetailViewSizing()
+
+            let cardExpanding = UIViewPropertyAnimator(duration: baseAnimator.duration * 0.7, curve: .linear) {
+                animateCardDetailViewSizing()
+            }
+            cardExpanding.startAnimation()
         }
 
         baseAnimator.addCompletion { _ in

@@ -16,17 +16,18 @@ final class PresentStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         let fromCell: StatementCardCollectionViewCell
     }
 
-    private var duration: TimeInterval = 0
-    private var damping: CGFloat = 0
+    private let presentAnimationDuration: TimeInterval
+    private let springAnimator: UIViewPropertyAnimator
 
     init(params: Params) {
         self.params = params
+        self.springAnimator = PresentStatementCardAnimator.createBaseSpringAnimator(params: params)
+        self.presentAnimationDuration = springAnimator.duration
         super.init()
-        self.createBaseSpringAnimator(params: params)
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return self.duration
+        return self.presentAnimationDuration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -168,41 +169,35 @@ final class PresentStatementCardAnimator: NSObject, UIViewControllerAnimatedTran
         // -------------------------------
         // Execute animation
         // -------------------------------
-        UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.damping, initialSpringVelocity: 0.0, options: [], animations: {
-            do {
-                animatedContainerVerticalConstraint.constant = 0
-                container.layoutIfNeeded()
+        self.springAnimator.addAnimations {
+            animateContainerBouncingUp()
+            let cardExpanding = UIViewPropertyAnimator(duration: self.springAnimator.duration * 0.7, curve: .linear) {
+                animateCardDetailViewSizing()
             }
-            do {
-                detailViewWidthConstraint.constant = animatedContainerView.bounds.width
-                detailViewHeightConstraint.constant = animatedContainerView.bounds.height
-                detailViewLeadingConstraint.constant = 0
-                detailView.layer.cornerRadius = 0
-                detailView.clipsToBounds = true
-                screens.detail.statementContentView.monthLabel.alpha = 0.0
-                // Expand the aount of height of the upper area
-                topTemporaryFix.constant = 100
+            cardExpanding.startAnimation()
+        }
 
-                container.layoutIfNeeded()
-            }
-        }, completion: { finished in
+        self.springAnimator.addCompletion { position in
             completeEverything()
-        })
+        }
+
+        self.springAnimator.startAnimation()
     }
 
-    private func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) {
-        // Damping between 0.5 (far away) and 1.0 (nearer)
+    private static func createBaseSpringAnimator(params: PresentStatementCardAnimator.Params) -> UIViewPropertyAnimator {
+        // Damping between 0.7 (far away) and 1.0 (nearer)
         let cardPositionY = params.fromCardFrame.minY
         let distanceToBounce = abs(params.fromCardFrame.minY)
         let extentToBounce = cardPositionY < 0 ? params.fromCardFrame.height : UIScreen.main.bounds.height
-        let dampFactorInterval: CGFloat = 0.5
+        let dampFactorInterval: CGFloat = 0.3
         let damping: CGFloat = 1.0 - dampFactorInterval * (distanceToBounce / extentToBounce)
-        self.damping = damping
 
-        // Duration between 0.4 (nearer) and 0.9 (far away)
-        let baselineDuration: TimeInterval = 0.4
+        // Duration between 0.5 (nearer) and 0.9 (far away)
+        let baselineDuration: TimeInterval = 0.5
         let maxDuration: TimeInterval = 0.9
         let duration: TimeInterval = baselineDuration + (maxDuration - baselineDuration) * TimeInterval(max(0, distanceToBounce)/UIScreen.main.bounds.height)
-        self.duration = duration
+
+        let springTiming = UISpringTimingParameters(dampingRatio: damping, initialVelocity: .init(dx: 0, dy: 0))
+        return UIViewPropertyAnimator(duration: duration, timingParameters: springTiming)
     }
 }
