@@ -134,20 +134,43 @@
 			children = (
 				FDE597E922E0701300C8AC0B /* Transition */,
 				FDE597DC22E01A7C00C8AC0B /* Views */,
+				FD44EC0322EAF96C007F2416 /* ViewControllers */,
 				FD41941F22DFFA5200D9DE06 /* AppDelegate.swift */,
-				FD32F72922E983B200C04B63 /* StatusBarAnimatableViewController.swift */,
-				FD41942122DFFA5200D9DE06 /* FirstViewController.swift */,
-				FD41942322DFFA5200D9DE06 /* SecondViewController.swift */,
 				FD41942522DFFA5200D9DE06 /* Main.storyboard */,
 				FD41942822DFFA5400D9DE06 /* Assets.xcassets */,
 				FD41942A22DFFA5400D9DE06 /* LaunchScreen.storyboard */,
 				FD41942D22DFFA5400D9DE06 /* Info.plist */,
-				FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */,
-				FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */,
-				FDE7A9CC22E6C8EB005CA7A5 /* StatementDetailViewController.swift */,
-				FDE7A9CD22E6C8EB005CA7A5 /* StatementDetailViewController.xib */,
 			);
 			path = TabAndAnimation;
+			sourceTree = "<group>";
+		};
+		FD44EC0322EAF96C007F2416 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDE597D822E01A3F00C8AC0B /* DetailViewController.swift */,
+				FDE597D922E01A3F00C8AC0B /* DetailViewController.xib */,
+				FD41942122DFFA5200D9DE06 /* FirstViewController.swift */,
+				FD41942322DFFA5200D9DE06 /* SecondViewController.swift */,
+				FDE7A9CC22E6C8EB005CA7A5 /* StatementDetailViewController.swift */,
+				FDE7A9CD22E6C8EB005CA7A5 /* StatementDetailViewController.xib */,
+				FD32F72922E983B200C04B63 /* StatusBarAnimatableViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		FD44EC0422EAF9BF007F2416 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				FD8C7B3F22E59D6300D307F6 /* CardCollectionTableViewCell.swift */,
+				FD8C7B4022E59D6300D307F6 /* CardCollectionTableViewCell.xib */,
+				FDE597E522E01FC900C8AC0B /* CardCollectionViewCell.swift */,
+				FDE597E622E01FC900C8AC0B /* CardCollectionViewCell.xib */,
+				FDE597DD22E01AB900C8AC0B /* CardContentView.swift */,
+				FDE597DF22E01AC600C8AC0B /* CardContentView.xib */,
+				FDE7A9BB22E69B75005CA7A5 /* SmallCardCollectionTableViewCell.swift */,
+				FDE7A9BC22E69B75005CA7A5 /* SmallCardCollectionTableViewCell.xib */,
+			);
+			path = Card;
 			sourceTree = "<group>";
 		};
 		FD5E045A22E7FA9B007FE498 /* SmallStatementCard */ = {
@@ -185,16 +208,9 @@
 		FDE597DC22E01A7C00C8AC0B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FD8C7B3F22E59D6300D307F6 /* CardCollectionTableViewCell.swift */,
-				FD8C7B4022E59D6300D307F6 /* CardCollectionTableViewCell.xib */,
-				FDE597E522E01FC900C8AC0B /* CardCollectionViewCell.swift */,
-				FDE597E622E01FC900C8AC0B /* CardCollectionViewCell.xib */,
-				FDE597DD22E01AB900C8AC0B /* CardContentView.swift */,
-				FDE597DF22E01AC600C8AC0B /* CardContentView.xib */,
-				FDE597E122E01D1700C8AC0B /* NibLoadable.swift */,
-				FDE7A9BB22E69B75005CA7A5 /* SmallCardCollectionTableViewCell.swift */,
-				FDE7A9BC22E69B75005CA7A5 /* SmallCardCollectionTableViewCell.xib */,
+				FD44EC0422EAF9BF007F2416 /* Card */,
 				FDE7A9CB22E6BCCD005CA7A5 /* Statement */,
+				FDE597E122E01D1700C8AC0B /* NibLoadable.swift */,
 				FDE597E322E01D4000C8AC0B /* UIView+AutoLayout.swift */,
 			);
 			path = Views;
@@ -203,8 +219,8 @@
 		FDE597E922E0701300C8AC0B /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				FD5E045A22E7FA9B007FE498 /* SmallStatementCard */,
 				FDE7A9D122E6D277005CA7A5 /* StatementCard */,
+				FD5E045A22E7FA9B007FE498 /* SmallStatementCard */,
 				FD8C7B3122E1AA7B00D307F6 /* LargeCard */,
 				FD8C7B3222E1AA9000D307F6 /* SmallCard */,
 			);
