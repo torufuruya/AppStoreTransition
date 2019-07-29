@@ -108,7 +108,7 @@ extension SmallCardCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
             fromCardFrame: cardPresentationFrameOnScreen,
             fromCardFrameWithoutTransform: cardFrameWithoutTransform,
             fromCell: cell,
-            containerFrame: containerFrame)
+            tabBar: self.viewController?.tabBarController?.tabBar)
         self.transition = SmallCardTransition(params: params)
         detail.transitioningDelegate = self.transition
 

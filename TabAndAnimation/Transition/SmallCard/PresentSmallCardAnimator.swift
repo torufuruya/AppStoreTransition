@@ -14,7 +14,7 @@ final class PresentSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
     struct Params {
         let fromCardFrame: CGRect
         let fromCell: CardCollectionViewCell
-        let containerFrame: CGRect
+        let tabBar: UITabBar?
     }
 
     private let presentAnimationDuration: TimeInterval
@@ -133,22 +133,6 @@ final class PresentSmallCardTransitionDriver {
         let stretchCardToFillBottom = cardContentView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
         stretchCardToFillBottom.isActive = true
 
-        // Fit container view frame to which is not including UITabBar
-        // not to display UI over the tab bar.
-        container.translatesAutoresizingMaskIntoConstraints = false
-        // Delete bottom anchor to UITransitionView to edit container height.
-        for constraint in container.constraints {
-            if constraint.firstAttribute == .bottom || constraint.secondAttribute == .bottom {
-                constraint.isActive = false
-            }
-        }
-        // Edit container width/height by setting new constraints.
-        let containerFrame = params.containerFrame
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: containerFrame.width),
-            container.heightAnchor.constraint(equalToConstant: containerFrame.height)
-        ])
-        container.clipsToBounds = true
         //<--- For debug
         container.layer.borderWidth = 4
         container.layer.borderColor = UIColor.green.cgColor
@@ -197,11 +181,33 @@ final class PresentSmallCardTransitionDriver {
             ctx.completeTransition(success)
         }
 
+        // Place the fake UITabBar by taking snapshot
+        // not to display UI over the original tab bar.
+        func animateToHideFakeTabBar() {
+            guard let tabBar = params.tabBar else { return }
+            var imageViewFrame = tabBar.frame
+            let imageView = UIImageView(frame: imageViewFrame)
+            imageView.image = tabBar.takeScreenshot()
+            imageView.backgroundColor = .green
+
+            tabBar.alpha = 0.0
+            container.addSubview(imageView)
+            imageViewFrame.origin.y += tabBar.bounds.height
+            UIView.animate(withDuration: 0.7, animations: {
+                imageView.frame = imageViewFrame
+            }, completion: { _ in
+                tabBar.alpha = 1.0
+                imageView.removeFromSuperview()
+            })
+        }
+
         baseAnimator.addAnimations {
             // Remove stretchCardToFillBottom constraints immediately.
             stretchCardToFillBottom.isActive = false
 
             animateContainerBouncingUp()
+
+            animateToHideFakeTabBar()
 
             let cardExpanding = UIViewPropertyAnimator(duration: baseAnimator.duration * 0.7, curve: .linear) {
                 animateCardDetailViewSizing()
@@ -214,5 +220,32 @@ final class PresentSmallCardTransitionDriver {
         }
 
         self.animator = baseAnimator
+    }
+}
+
+extension UIView {
+
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+            drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+    }
+
+    func takeScreenshot() -> UIImage {
+        // Begin context
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
+
+        // Draw view in that context
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+
+        // And finally, get image
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        if (image != nil)
+        {
+            return image!
+        }
+        return UIImage()
     }
 }

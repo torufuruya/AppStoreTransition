@@ -28,7 +28,7 @@ class SmallCardPresentationController: UIPresentationController {
         presentingViewController.beginAppearanceTransition(false, animated: false)
         presentedViewController.transitionCoordinator!.animate(alongsideTransition: { (ctx) in
             UIView.animate(withDuration: 0.5, animations: {
-                self.blurView.effect = UIBlurEffect(style: .light)
+                self.blurView.effect = UIBlurEffect(style: .dark)
                 self.blurView.alpha = 1
             })
         })

@@ -13,7 +13,7 @@ final class SmallCardTransition: NSObject, UIViewControllerTransitioningDelegate
         let fromCardFrame: CGRect
         let fromCardFrameWithoutTransform: CGRect
         let fromCell: CardCollectionViewCell
-        let containerFrame: CGRect
+        let tabBar: UITabBar?
     }
 
     let params: Params
@@ -27,7 +27,7 @@ final class SmallCardTransition: NSObject, UIViewControllerTransitioningDelegate
         let params = PresentSmallCardAnimator.Params.init(
             fromCardFrame: self.params.fromCardFrame,
             fromCell: self.params.fromCell,
-            containerFrame: self.params.containerFrame
+            tabBar: self.params.tabBar
         )
         return PresentSmallCardAnimator(params: params)
     }
@@ -37,7 +37,7 @@ final class SmallCardTransition: NSObject, UIViewControllerTransitioningDelegate
             fromCardFrame: self.params.fromCardFrame,
             fromCardFrameWithoutTransform: self.params.fromCardFrameWithoutTransform,
             fromCell: self.params.fromCell,
-            containerFrame: self.params.containerFrame
+            tabBar: self.params.tabBar
         )
         return DismissSmallCardAnimator(params: params)
     }

@@ -14,7 +14,7 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
         let fromCardFrame: CGRect
         let fromCardFrameWithoutTransform: CGRect
         let fromCell: CardCollectionViewCell
-        let containerFrame: CGRect
+        let tabBar: UITabBar?
     }
 
     struct Constants {
@@ -95,17 +95,27 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
                 constraint.isActive = false
             }
         }
-        // Edit container width/height by setting new constraints.
-        let containerFrame = self.params.containerFrame
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: containerFrame.width),
-            container.heightAnchor.constraint(equalToConstant: containerFrame.height)
-        ])
-        container.clipsToBounds = true
-        //<--- For debug
-        container.layer.borderWidth = 4
-        container.layer.borderColor = UIColor.green.cgColor
-        //--->
+
+        // Place the fake UITabBar by taking snapshot
+        // not to display UI over the original tab bar.
+        var fakeTabBarImageView: UIImageView?
+        var originalTabBarFrame: CGRect = .zero
+        if let tabBar = params.tabBar {
+            var fakeTabBarImageViewFrame = tabBar.frame
+            fakeTabBarImageView = UIImageView(frame: fakeTabBarImageViewFrame)
+            fakeTabBarImageView!.image = tabBar.takeScreenshot()
+            // Imitate original tab bar appearance.
+            fakeTabBarImageView!.backgroundColor = .white
+            fakeTabBarImageView?.layer.borderColor = UIColor.darkGray.cgColor
+            fakeTabBarImageView?.layer.borderWidth = 0.2
+            container.addSubview(fakeTabBarImageView!)
+
+            originalTabBarFrame = tabBar.frame
+            fakeTabBarImageViewFrame.origin.y += originalTabBarFrame.height
+            fakeTabBarImageView!.frame = fakeTabBarImageViewFrame
+            // Hide original tab bar.
+            tabBar.alpha = 0.0
+        }
 
         func animateCardViewBackToPlace() {
             stretchCardToFillBottom.isActive = true
@@ -124,6 +134,10 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
             container.layoutIfNeeded()
         }
 
+        func animateToShowFakeTabBar() {
+            fakeTabBarImageView?.frame = originalTabBarFrame
+        }
+
         func completeEverything() {
             let success = !ctx.transitionWasCancelled
             animatedContainerView.removeConstraints(animatedContainerView.constraints)
@@ -131,6 +145,8 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
             if success {
                 detailView.removeFromSuperview()
                 self.params.fromCell.isHidden = false
+                // Restore original UITabBar appearance.
+                params.tabBar?.alpha = 1.0
             } else {
                 // Remove temporary fixes if not success!
                 topTemporaryFix.isActive = false
@@ -149,12 +165,9 @@ final class DismissSmallCardAnimator: NSObject, UIViewControllerAnimatedTransiti
 
         UIView.animate(withDuration: transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
             animateCardViewBackToPlace()
+            animateToShowFakeTabBar()
         }) { (finished) in
             completeEverything()
-        }
-
-        UIView.animate(withDuration: transitionDuration(using: ctx) * 0.6) {
-//            screens.detail.scrollView.contentOffset = .zero
         }
     }
 }

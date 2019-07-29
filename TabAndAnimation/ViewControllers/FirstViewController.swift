@@ -214,7 +214,8 @@ class SmallCardCollection: NSObject, UICollectionViewDelegate, UICollectionViewD
         let params = SmallCardTransition.Params(
             fromCardFrame: cardPresentationFrameOnScreen,
             fromCardFrameWithoutTransform: cardFrameWithoutTransform,
-            fromCell: cell, containerFrame: .zero)
+            fromCell: cell,
+            tabBar: self.viewController?.tabBarController?.tabBar)
         self.transition = SmallCardTransition(params: params)
         detail.transitioningDelegate = self.transition
 
